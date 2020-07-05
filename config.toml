@@ -1,0 +1,60 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Samarth's Blog"
+theme = "kiss"
+copyright = "&copy; Samarth Kishor 2020"
+Paginate = 10 # Number of posts per page
+enableRobotsTXT = true
+
+[params.source]
+org_dir = "content-org"
+md_dir = "content"
+
+[params.rss] # Adding this tag enables RSS feed
+includeContent = true # Includes whole content in rss
+authorName = "Samarth Kishor" # Author full name
+authorEmail = "samarthkishor1@gmail.com" # Author email
+
+[params.assets]
+customCSS = ["css/styles.css", "css/vertical-timeline.css"]
+
+[params.info]
+adsense = "" # Adsense ID (ID only, without ca-pub-)
+# enableSocial = true # Adds OpenGraph and Twitter cards
+homeTitle = "Samarth's Blog" # Title for home page
+poweredby = true # Adds powered by hugo and anubis below Copyright
+related = false # Includes related articles at the bottom of the article
+codeCopy = false # Add copy button above code blocks
+taxonomiesCount = true # Add taxonomies count
+
+# [params.features]
+# disqusOnDemand = true  # Load Disqus comments on click
+
+[params.social]
+github = "samarthkishor"
+email = "samarthkishor1@gmail.com"
+linkedin = "samarth-kishor"
+rss = "index.xml" # Add this to show RSS button in social.
+
+[params.social.config]
+platforms = ["github","linkedin","email"]
+
+[params.sections_left]
+"/about" = "About"
+"/posts" = "Archive"
+
+# [params.matomoAnalytics]
+# siteID = 1
+# rootURL = "//matomo.example.com/"
+
+# [params.fathomAnalytics]
+# rootURL = "//fathom.example.com/"
+
+[taxonomies]
+tag ="tags"
+
+[blackfriday]
+hrefTargetBlank = true
+
+[markup.goldmark.renderer]
+unsafe = true

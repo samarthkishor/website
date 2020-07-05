@@ -1,0 +1,1218 @@
+#+TITLE: Samarth's Blog
+#+HUGO_BASE_DIR: ../
+#+OPTIONS:  ^:nil
+#+HUGO_SECTION: posts/
+#+HUGO_AUTO_SET_LASTMOD: t
+#+DATE: 2020-06-29
+#+STARTUP: logdone
+
+* DONE Three Completely Different Approaches to the FizzBuzz Problem :programming:python:OCaml:lisp:
+CLOSED: [2020-03-11 Mon 22:49]
+:PROPERTIES:
+:EXPORT_FILE_NAME: fizzbuzz_approaches
+:END:
+
+Here's a solution to the classic infamous FizzBuzz problem in Python:
+
+#+BEGIN_SRC python :results output :exports both
+for i in range(1, 31):
+    if i % 15 == 0:
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz
+Fizz
+22
+23
+Fizz
+Buzz
+26
+Fizz
+28
+29
+FizzBuzz
+#+end_example
+
+This program is really simple and is probably the most common approach. You just
+need to understand how =if= statements work and you're good to go.
+
+We can take this up a notch by using type-driven exhaustive pattern-matching so
+that our programming language can actually tell us if we've made a mistake in
+our implementation. Here's version 2 of the FizzBuzz program using the OCaml
+programming language:
+
+#+BEGIN_SRC ocaml :exports both
+open Base
+
+let () =
+  for i = 1 to 30 do
+    match Int.rem i 3, Int.rem i 5 with
+    | 0, 0 -> Stdio.print_endline "FizzBuzz"
+    | 0, _ -> Stdio.print_endline "Fizz"
+    | _, 0 -> Stdio.print_endline "Buzz"
+    | _, _ -> Stdio.printf "%d\n" i
+  done
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz
+Fizz
+22
+23
+Fizz
+Buzz
+26
+Fizz
+28
+29
+FizzBuzz
+#+end_example
+
+Notice the =match= expression right after the =for= loop. OCaml has a really
+powerful type system that can catch some tricky edge cases in our logic at
+compile time. The function =Int.rem= is just like modulo in other languages (I'm
+using the =Base= alternate standard library for OCaml---the default language
+comes with a =mod= operator). All the =match= expression in the code above is
+doing is saying: "If i mod 3 is 0 and i mod 5 is 0, then print FizzBuzz, else if
+i mod 3 is 0 and i mod 5 is anything, then print Fizz, else if i mod 3 is
+anything and i mod 5 is 0, then print Buzz, else print i if both are anything".
+
+That looks an awful lot like a standard =if= statement to me. The real advantage
+comes when you forget to include a case:
+
+#+BEGIN_SRC ocaml :exports both
+open Base
+
+let () =
+  for i = 1 to 30 do
+    match Int.rem i 3, Int.rem i 5 with
+    | 0, 0 -> Stdio.print_endline "FizzBuzz"
+    | 0, _ -> Stdio.print_endline "Fizz"
+    | _, 0 -> Stdio.print_endline "Buzz"
+    (* | _, _ -> Stdio.printf "%d\n" i <-- commented out *)
+  done
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Characters 45-207:
+  ....match Int.rem i 3, Int.rem i 5 with
+      | 0, 0 -> Stdio.print_endline "FizzBuzz"
+      | 0, _ -> Stdio.print_endline "Fizz"
+      | _, 0 -> Stdio.print_endline "Buzz"
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(1, 1)
+Exception: Match_failure ("//toplevel//", 228, 4).
+Raised at file "//toplevel//", line 231, characters 14-40
+Called from file "toplevel/toploop.ml", line 180, characters 17-56
+#+end_example
+
+This is really cool---OCaml's compiler knows when the =match= statement doesn't
+cover all the possible cases and will even give you an example of a case that
+wasn't met! Once we include that last case, the program will successfully
+compile. Depending how you structure your pattern matching, the compiler will
+sometimes even tell you if you've used redundant or incorrect cases. It's a
+killer feature and I wish more languages had it. Exhaustive pattern matching
+like this is usually unique to strongly typed functional programming languages,
+although Rust has also adopted this feature and I'm sure others will follow.
+
+Now for the third and wildest approach to solving the FizzBuzz problem---this
+time with Clojure. Clojure is a Lisp dialect that emphasizes functional
+programming and immutable data structures. This language also happens to have
+great support for lazy sequences---a feature that this particular FizzBuzz
+program uses heavily.
+
+A lazy sequence is not evaluated immediately---instead, it delays its evaluation
+until it is needed by another function.
+
+To illustrate this, here's the documentation for the =cycle= function in
+Clojure:
+
+#+BEGIN_SRC clojure :results output :exports both :eval never-export
+(doc cycle)
+#+END_SRC
+
+#+RESULTS:
+: -------------------------
+: clojure.core/cycle
+: ([coll])
+:   Returns a lazy (infinite!) sequence of repetitions of the items in coll.
+
+How do you use these so-called infinite sequences without using up all the
+memory in your computer? The key to using lazy sequences is that these functions
+are not evaluated until they are needed by another function. So running this:
+
+#+BEGIN_SRC clojure
+(cycle '("Fizz" "Buzz"))
+#+END_SRC
+
+would just hang the Clojure session because it's waiting to be evaluated. Let's
+fix that by taking some values from this infinite sequence.
+
+#+BEGIN_SRC clojure :exports both :eval never-export
+(take 10 (cycle '("Fizz" "Buzz")))
+#+END_SRC
+
+#+RESULTS:
+| Fizz | Buzz | Fizz | Buzz | Fizz | Buzz | Fizz | Buzz | Fizz | Buzz |
+
+Now we can write a completely different FizzBuzz implementation leveraging the
+power of these lazy sequences. I modified the example from [[http://www.petecorey.com/blog/2018/07/09/golfing-for-fizzbuzz-in-clojure-and-elixir/][this blog post]] so the
+output would match my Python and OCaml programs.
+
+#+BEGIN_SRC clojure :results output :exports both :eval never-export
+(doseq
+    [x
+     (->>
+      (map list
+           (range 31)
+           (cycle ["Fizz" "" ""])
+           (cycle ["Buzz" "" "" "" ""]))
+      (rest)
+      (map (fn [lst]
+             (let [i (first lst)]
+               (if (or (= 0 (mod i 3)) (= 0 (mod i 5)))
+                 (apply str (concat (rest lst)))
+                 (apply str (concat lst)))))))]
+  (println x))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz
+Fizz
+22
+23
+Fizz
+Buzz
+26
+Fizz
+28
+29
+FizzBuzz
+#+end_example
+
+The four lines of code below is the heart of the program. It uses the =range=
+function to assign numbers to the first elements of the lists and then uses the
+two =cycle= functions to assign either the empty string, Fizz, or Buzz to the
+second and third elements of the list respectively. It's a really neat
+declarative way of implementing FizzBuzz and my mind was completely blown when I
+understood what the program really does.
+
+#+BEGIN_SRC clojure :exports both :eval never-export
+(map list
+     (range 31)
+     (cycle ["Fizz" "" ""])
+     (cycle ["Buzz" "" "" "" ""]))
+#+END_SRC
+
+#+RESULTS:
+|  0 | Fizz | Buzz |
+|  1 |      |      |
+|  2 |      |      |
+|  3 | Fizz |      |
+|  4 |      |      |
+|  5 |      | Buzz |
+|  6 | Fizz |      |
+|  7 |      |      |
+|  8 |      |      |
+|  9 | Fizz |      |
+| 10 |      | Buzz |
+| 11 |      |      |
+| 12 | Fizz |      |
+| 13 |      |      |
+| 14 |      |      |
+| 15 | Fizz | Buzz |
+| 16 |      |      |
+| 17 |      |      |
+| 18 | Fizz |      |
+| 19 |      |      |
+| 20 |      | Buzz |
+| 21 | Fizz |      |
+| 22 |      |      |
+| 23 |      |      |
+| 24 | Fizz |      |
+| 25 |      | Buzz |
+| 26 |      |      |
+| 27 | Fizz |      |
+| 28 |      |      |
+| 29 |      |      |
+| 30 | Fizz | Buzz |
+
+I never knew FizzBuzz could be solved in so many different ways and it's a neat
+little problem to illustrate the strengths and styles of different programming
+languages: Python is great for writing legible imperative code that's simple yet
+expressive. OCaml is great for writing safe strongly typed code with exhaustive
+compiler checks when you need them. Clojure is great for writing highly dynamic
+functional code which uses lots of abstractions that makes working with data
+much easier.
+
+
+* DONE Remote Linux Process Hacking through SSH :programming:lisp:linux:
+CLOSED: [2020-03-09 Mon 22:10]
+:PROPERTIES:
+:EXPORT_FILE_NAME: remote_process_hacking
+:END:
+
+There's this really cool [[https://www.youtube.com/playlist?list=PLBgJcoaU2hl-JnoVOzjYB5qk_PfYjPm-I][process hacking series]] on YouTube by Keist Zenon. He
+uses the programming language Common Lisp to interact with processes on his
+Linux machine. I tried following the tutorial on my Mac, but macOS does not have
+the same =ptrace= commands and system call interfaces as Linux so this did not
+work out. However, I have VirtualBox set up on my Mac with a Debian VM which I
+use whenever I need Linux.
+
+Here's the idea: is it possible to hack processes on my Linux VM from Emacs on
+my Mac? I found out that it's not only possible, but it's actually surprisingly
+easy.
+
+** Configuring the Virtual Machine
+# :PROPERTIES:
+# :HEADER-ARGS:sh: :dir /ssh:debian-box:/home/samarth/cl-ptrace
+# :END:
+
+First you'll need to set up a Bridged Adapter on your VirtualBox VM to allow
+your host machine to connect to it via SSH. [[https://www.youtube.com/watch?v=ErzhbUusgdI][This YouTube tutorial]] was pretty
+helpful. You'll just have to change how you enable the SSH service on your Linux
+VM---I'm on Debian so I had to run the command
+
+#+BEGIN_SRC sh :exports both :eval never-export
+systemctl status ssh | cat | grep active
+#+END_SRC
+
+#+RESULTS:
+: Active: active (running) since Fri 2020-03-13 18:24:14 EDT; 33s ago
+
+to see if SSH was enabled.
+
+To attach and manipulate this process, we need to use the =ptrace= function. You
+can see the documentation for it with the command =man 2 ptrace= (2 stands for
+the second section of the manual, since we want the C system call function for
+=ptrace= instead of the general UNIX command). We could use C for process
+hacking, but it's a lot nicer to use an interactive language like Lisp. Plus,
+it's possible to interact with a remote Lisp REPL from your host machine's local
+Emacs instance through SSH. Common Lisp is pretty amazing---I don't know if many
+other programming languages have these features.
+
+Clone [[https://github.com/k-stz/cl-ptrace][Keist's GitHub repo]] to your VM to get his Common Lisp library for process
+hacking with =ptrace=. The code here is essentially the same as the tutorial,
+except you might have to remove the line that says
+
+#+BEGIN_SRC common-lisp
+(:file "cl-ptrace/async-functions")
+#+END_SRC
+
+since that file doesn't exist in the repo for some reason. Install your Common
+Lisp implementation of choice (I use =sbcl= since it's well-supported on most
+platforms) and follow the instructions on the [[https://www.quicklisp.org/beta/][Quicklisp website]] to install
+Quicklisp. Quicklisp is the unofficial package manager for Common Lisp.
+
+Once you've successfully installed Quicklisp, you need to set up a Lisp REPL on
+the remote VM so it can talk to your local Emacs editor. Quit out of your =sbcl=
+repl and run it as root. We need Lisp to run as root since the =ptrace= system
+calls need root access.
+
+#+BEGIN_SRC sh
+sudo sbcl
+#+END_SRC
+
+In his tutorial, Kaiste avoided this problem by running Emacs as root since he
+was hacking processes from the same machine. However, we don't want to do this
+since running Emacs as root can be dangerous, plus we are trying to hack
+processes on our /remote/ machine from our /local (host)/ Emacs editor, so
+running Emacs locally as root wouldn't really be useful.
+
+Use Quicklisp to load/install =ASDF= and =slynk=, and then create a =slynk=
+server on port 4006. You can use the default port 4005 if it's open.
+
+#+BEGIN_SRC common-lisp
+(ql:quickload :asdf)
+(ql:quickload :slynk)
+(slynk:create-server :port 4006)
+#+END_SRC
+
+If you get stuck, follow the instructions in [[https://joaotavora.github.io/sly/#Setting-up-the-Lisp-image][the SLY manual]], but I think
+Quicklisp makes this process a bit easier.
+
+Now fire up a new terminal and get your VM's ip address. On Debian, the command
+is
+
+#+BEGIN_SRC sh :eval never-export
+hostname -I
+#+END_SRC
+
+#+RESULTS:
+: 192.168.1.4
+
+After that, SSH into your VM from your /host/ machine to create an SSH tunnel
+that we'll take advantage of later.
+
+#+BEGIN_SRC sh
+ssh -L4006:localhost:4006 <username>@<ip-address>
+#+END_SRC
+
+Change =4006= to the port that =slynk= is using to run your Lisp server, and
+change the =<username>= and =<ip-address>= fields. Remember to run this command
+from your host machine, not the VM.
+
+Once your SSH tunnel is set up, follow the instructions in section 8.1.3 of the
+SLY manual (linked above) to configure Emacs to translate filenames between the
+remote and host machines. Make sure you have TRAMP installed and working in
+Emacs. Now you can connect to your VM from your host machine's Emacs using
+TRAMP. =C-x C-f /ssh:<username>@<ip-address>= should do the trick. Now you can
+navigate to the =cl-ptrace= repo.
+
+The setup is pretty much over: now we can start hacking. Compile the =spam.c=
+file in the =cl-ptrace= repo on your VM into the executable =spam= and run it.
+
+#+BEGIN_SRC sh
+gcc spam.c -o spam
+./spam
+#+END_SRC
+
+We want to get the process id (=pid=) of this =spam= program so we can interact
+with it. To do this, run the command
+
+#+NAME: spam-pid
+#+BEGIN_SRC sh :exports both :eval never-export
+ps -a | grep spam | awk '{ print $1 }'
+#+END_SRC
+
+#+RESULTS: spam-pid
+: 1543
+
+We can then display information about the process with =top=. You can get a
+nicer output by using the =htop= program.
+
+#+BEGIN_SRC sh :var PID=spam-pid
+top -p $PID
+#+END_SRC
+
+We can even limit the output of =top= to just get the CPU usage. The =sed=
+commands are just for making the output nicer.
+
+#+BEGIN_SRC sh :var PID=spam-pid :exports both :eval never-export
+top -p $PID -n 2 -b | grep Cpu | sed 's/\:/\: /' | sed 's/us,.*/ /'
+#+END_SRC
+
+#+RESULTS:
+| %Cpu(s): |  53.6 |
+| %Cpu(s): | 100.0 |
+
+Notice that the =spam= program is taking up over 90% of the CPU since it's an
+infinite =while= loop in a single-threaded process.
+
+** Hacking in Emacs
+
+Next, switch back to Emacs (on the host machine) and make sure you're in the
+remote =cl-ptrace= repo via TRAMP. We want to connect to the remote Lisp server
+from Emacs, so run the command =M-x sly-connect=, keep the default host as
+=localhost=, and change the port to the =slynk= server port.
+
+Now you have a local Lisp REPL that is connected to your VM via the SSH tunnel
+we created earlier. Load the file =cl-ptrace.asd= with the command =M-x
+sly-load-file=. The file is on the remote VM, but this isn't a problem because
+TRAMP should be configured to handle the remote filenames (we did this earlier).
+This should load the file into the =sly= REPL. Then run =(asdf:load-system
+"cl-ptrace")= to load the =cl-ptrace= library into the REPL, and run
+=(in-package :cl-ptrace)= to start using the library.
+
+Make sure that you're root by running the function =(am-i-root?)=. It should
+return =T=. Now you've successfully created a mechanism to hack remote processes
+from your local machine using Common Lisp and Emacs. Go ahead and follow along
+with the rest of Kaiste's videos---they're amazing.
+
+* Interactive OCaml Development :OCaml:programming:
+CLOSED: [2020-03-08 Sun 22:06]
+:PROPERTIES:
+:EXPORT_FILE_NAME: interactive_ocaml_development
+:END:
+
+Interactive development features are mostly found in dynamically-typed
+interpreted programming languages like Python or JavaScript. While OCaml is a
+statically-typed compiled language, it is still possible to program in an
+interactive style using a REPL. However, OCaml will never be quite as flexible
+and interactive as something like Lisp because of its greatest feature: the
+strong static type system.
+
+** Testing functions using the REPL
+
+One of the nicest features of OCaml is that is has both a byte-code compiler
+(=ocamlc=) and a native-code compiler (=ocamlopt=). This means that you can
+develop programs in an interactive, [[http://www.paulgraham.com/progbot.html][bottom-up]] style using the REPL. Bottom-up
+development is a technique most-often leveraged by Lisp programmers in which you
+can write a single function, compile it and send it to the REPL, and then test
+that function interactively in the REPL. OCaml's fast bytecode compiler makes it
+possible to use this technique that is usually unique to Lisps and interpreted
+languages.
+
+*** Sending code to the REPL in Emacs
+I'll describe the process for interactive development using Emacs which is my
+text editor of choice. Similar techniques should exist for other editors such as
+VS Code or Vim.
+
+OCaml's REPL is called =utop= and it has a lot of nice features that make it
+well-suited for interactive development. If you're using Emacs, you can send
+your OCaml code to =utop= to be evaluated. Here's an example of using =utop= to
+test a single function.
+
+#+BEGIN_SRC ocaml
+open Base
+
+let sum_list list = List.fold ~f:( + ) ~init:0 list
+#+END_SRC
+
+To send this code to =utop=, highlight it and press =C-x C-r= (or =M-x
+utop-eval-region RET=). You can even send an entire buffer to =utop= by pressing
+=C-c C-b= via the function =utop-eval-buffer=. If you use the =dune= build
+system and configure Emacs appropriately (instructions on how to do this are in
+the [[https://github.com/ocaml-community/utop#main-setup][utop documentation]]), a dialog will pop up saying: "utop command line: opam
+config exec -- dune utop . -- -emacs". Press =RET= to evaluate the code.
+
+You might have seen a message saying "Error: unbound module Base". This code
+uses [[https://opensource.janestreet.com/base/][Jane Street's Base alternative standard library]] which makes things a bit
+more complicated, since =utop= does not know about Base by default.
+
+To solve this, create a new file in the same directory called =.ocamlinit=.
+=utop= reads this file before starting and executes the commands specified. You
+just need to include a single line to load the Base library into =utop=:
+
+#+BEGIN_SRC ocaml
+#require "base";;
+#+END_SRC
+
+Now try the previous steps again to load the =sum_list= function into =utop=. If
+this still doesn't work, make sure your =opam= environment is set up correctly
+by running the command =opam switch= in a terminal and following the
+instructions.
+
+Once everything is working, go ahead and test the function in the REPL by
+running =sum_list [1; 2; 3];;= (the double semicolons at the end of the line are
+important because =utop= uses them to mark the end of an expression). If you
+want to make changes to the function, simply switch back to the OCaml buffer,
+edit the code, and send it back to =utop=.
+
+*** Working with multiple files in the REPL
+
+The technique I described above works great within a single file, but things get
+complicated once you send code from multiple files to the same =utop= instance.
+For example, say you made the =sum_list= function within a file called
+=test.ml= and sent that code to =utop=. Now you want to use =Test.sum_list=
+within another file, so you create a new file called =use_test.ml= which
+implements a new function:
+
+#+BEGIN_SRC ocaml
+let double_sum_list list = (Test.sum_list list) * 2
+#+END_SRC
+
+Now when you go to send this new function to =utop=, you run into an error:
+"Error: Unbound module Test".
+
+Here's the full sample =utop= session:
+
+#+BEGIN_SRC
+utop[0]> open Base
+
+let sum_list list = List.fold ~f:( + ) ~init:0 list
+;;
+val sum_list : int list -> int = <fun>
+utop[1]> sum_list [1; 2; 3];;
+- : int = 6
+utop[2]> let double_sum_list list = (Test.sum_list list) * 2
+;;
+
+Error: Unbound module Test
+#+END_SRC
+
+Since OCaml isn't really made to be an interactive programming language, there
+isn't a clean solution for this problem as far as I'm aware. However, you can
+hack around this using the same =.ocamlinit= file that I mentioned before.
+
+Kill =utop= and modify the =.ocamlinit= file to look like this:
+
+#+BEGIN_SRC ocaml
+#require "base";;
+#mod_use "test.ml";;
+#+END_SRC
+
+The =#mod_use= function tells =utop= to import the given file into the REPL as a
+module. This is important because it lets us call =sum_list= as =Test.sum_list=.
+=#mod_use= essentially wraps up the functions from the file into a module and
+sends that module to be evaluated in the REPL, which is basically how the OCaml
+compiler treats OCaml files. We don't want to change our development style to
+work with the REPL since =utop= is configurable enough.
+
+There is one caveat with this approach: you have to edit =.ocamlinit= and
+restart =utop= whenever you create a new file. If you switch files (say you were
+sending code from =use_test.ml= to the REPL but now want to work with
+=test.ml=), you have to restart =utop= each time to ensure that it has the most
+up-to-date version of all your files/modules. This is a bit of a pain and I'm
+not sure if there's a solution to this problem given OCaml's static nature.
+
+** Pretty-printing
+
+A major part of interactive development is seeing the results of functions in
+the REPL. Since OCaml has a strong type system without dynamic dispatch, you can
+only print strings---this means that you have to write functions to convert your
+user-defined types (which are everywhere in idiomatic OCaml code) to strings
+each time you want to print them. This is a pain, but luckily there's an elegant
+solution: [[https://github.com/ocaml-ppx/ppx_deriving#plugin-show][ppx]].
+
+=ppx= is a syntax extension to OCaml which acts as a macro that automatically
+generates code to pretty-print a custom type (=ppx_deriving.show=), generate
+equality functions (=ppx_deriving.eq=), etc.
+
+To pretty-print custom types annotated with =[@@deriving show]= in =utop=, you'll need to
+once again modify the =.ocamlinit= file and add the following line:
+
+#+BEGIN_SRC ocaml
+#install_printer Module.pp;;
+#+END_SRC
+
+where =Module= is the name of the module which has the corresponding =pp=
+function. Here's an example of one such module that pretty-prints a custom
+hash-table with the =Depths= module, where =type t=... =[@@deriving show]= refers
+to the =Resolver.t= type:
+
+#+BEGIN_SRC ocaml
+module Depths = struct
+  type t = (string, int) Hashtbl.t
+
+  let pp ppf values =
+    Caml.Format.open_hovbox 1;
+    Caml.Format.print_cut ();
+    if Hashtbl.length values = 0
+    then Caml.Format.fprintf ppf "@[<hov 2>{}@]"
+    else (
+      Caml.Format.fprintf ppf "@[<hov 1>{@ @]";
+      Hashtbl.iteri values ~f:(fun ~key ~data ->
+          Caml.Format.fprintf ppf "@[<hov 2>%s: %d,@ @]" key data);
+      Caml.Format.fprintf ppf "@[<hov 1>}@]");
+    Caml.Format.close_box ()
+  ;;
+end
+
+type t =
+  { statements : Parser.statement list
+  ; scopes : Scopes.t
+  ; depths : Depths.t
+  ; parsed_statements : Parser.statement list
+  }
+[@@deriving show]
+#+END_SRC
+
+Here are the corresponding lines in =.ocamlinit= which tell =utop= which types
+to pretty-print (the above code is from a file called =resolver.ml=):
+
+#+BEGIN_SRC ocaml
+#install_printer Resolver.pp;;
+#install_printer Resolver.Depths.pp;;
+#+END_SRC
+
+Now =utop= knows to call the respective =pp= function whenever it needs to print
+type information for the corresponding module. I needed to write the custom
+=Depths.pp= function by hand since =ppx_deriving.show= is not powerful enough to
+work for all custom types. This is one drawback of strong static type systems.
+
+** Tracing function execution
+
+Say you want to now debug the =resolve= function in your =Resolver= module, but
+the return value of =resolve= is of type =Resolver.t=. If you didn't have the
+=[@@deriving show]= =ppx= annotation on =type t= and didn't write the custom
+=Scopes.pp= and =Depths.pp= functions, this would be part of the output of
+tracing a call to =Resolver.resolve= in =utop= (I cut off the rest of the output
+since it wasn't important):
+
+#+BEGIN_SRC ocaml
+utop[1]> #trace Resolver.resolve;;
+Resolver.resolve is now traced.
+utop[2]> Scanner.make_scanner "var x = 1; { var y = 2; }"
+|> Scanner.scan_tokens
+|> Parser.make_parser
+|> Parser.parse
+|> Resolver.make_resolver
+|> Resolver.resolve;;
+Resolver.resolve <--
+  {Resolver.statements =
+    [Parser.VarDeclaration
+      {Parser.name =
+        {Scanner.token_type = Scanner.Identifier; lexeme = "x";
+         literal = Value.LoxNil; line = 1};
+       init =
+        Parser.Literal
+         {Parser.token =
+           {Scanner.token_type = Scanner.Number; lexeme = "1";
+            literal = Value.LoxNumber 1.; line = 1};
+          value = Value.LoxNumber 1.}};
+     Parser.Block
+      [Parser.VarDeclaration
+        {Parser.name =
+          {Scanner.token_type = Scanner.Identifier; lexeme = "y";
+           literal = Value.LoxNil; line = 1};
+         init =
+          Parser.Literal
+           {Parser.token =
+             {Scanner.token_type = Scanner.Number; lexeme = "2";
+              literal = Value.LoxNumber 2.; line = 1};
+            value = Value.LoxNumber 2.}}]];
+   scopes = <abstr>; depths = <abstr>;
+#+END_SRC
+
+Notice this last line: =scopes = <abstr>; depths = <abstr>;=. The =<abstr>=
+value indicates that OCaml does not know how to print values of the =Scopes.t=
+or =Depths.t= type since there are no dedicated =pp= functions for those types.
+
+Once I added the =[@@deriving show]= annotation back to =type t=, wrote the
+=Scopes.pp= and =Depths.pp= functions, and added the relevant =#install_printer=
+lines to =.ocamlinit=, this was the full output of the same trace to
+=Resolver.resolve=:
+
+#+BEGIN_SRC ocaml
+utop[1]> #trace Resolver.resolve;;
+Resolver.resolve is now traced.
+utop[2]> Scanner.make_scanner "var x = 1; { var y = 2; }"
+|> Scanner.scan_tokens
+|> Parser.make_parser
+|> Parser.parse
+|> Resolver.make_resolver
+|> Resolver.resolve;;
+Resolver.resolve <--
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve <--
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "1"; literal = (Value.Value.LoxNumber 1.); line = 1 };
+             value = (Value.Value.LoxNumber 1.) }))
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve -->
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "1"; literal = (Value.Value.LoxNumber 1.); line = 1 };
+             value = (Value.Value.LoxNumber 1.) }))
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve <--
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 2.) })
+          })
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve <--
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = { y: declared, }; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve -->
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = { y: declared, }; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve -->
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = { y: declared, }; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve <--
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve -->
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+Resolver.resolve -->
+  { Resolver.Resolver.statements =
+    [(Parser.Parser.Expression
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+             value = (Value.Value.LoxNumber 2.) }))
+      ];
+    scopes = {}; depths = {};
+    parsed_statements =
+    [(Parser.Parser.VarDeclaration
+        { Parser.Parser.name =
+          { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+            lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+          init =
+          (Parser.Parser.Literal
+             { Parser.Parser.token =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                 lexeme = "1"; literal = (Value.Value.LoxNumber 1.);
+                 line = 1 };
+               value = (Value.Value.LoxNumber 1.) })
+          });
+      (Parser.Parser.Block
+         [(Parser.Parser.VarDeclaration
+             { Parser.Parser.name =
+               { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+                 lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+               init =
+               (Parser.Parser.Literal
+                  { Parser.Parser.token =
+                    { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                      lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                      line = 1 };
+                    value = (Value.Value.LoxNumber 2.) })
+               })
+           ])
+      ]
+    }
+- : Resolver.t =
+{ Resolver.Resolver.statements =
+  [(Parser.Parser.Expression
+      (Parser.Parser.Literal
+         { Parser.Parser.token =
+           { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+             lexeme = "2"; literal = (Value.Value.LoxNumber 2.); line = 1 };
+           value = (Value.Value.LoxNumber 2.) }))
+    ];
+  scopes = {}; depths = {};
+  parsed_statements =
+  [(Parser.Parser.VarDeclaration
+      { Parser.Parser.name =
+        { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+          lexeme = "x"; literal = Value.Value.LoxNil; line = 1 };
+        init =
+        (Parser.Parser.Literal
+           { Parser.Parser.token =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+               lexeme = "1"; literal = (Value.Value.LoxNumber 1.); line = 1 };
+             value = (Value.Value.LoxNumber 1.) })
+        });
+    (Parser.Parser.Block
+       [(Parser.Parser.VarDeclaration
+           { Parser.Parser.name =
+             { Scanner.Scanner.token_type = Scanner.Scanner.Identifier;
+               lexeme = "y"; literal = Value.Value.LoxNil; line = 1 };
+             init =
+             (Parser.Parser.Literal
+                { Parser.Parser.token =
+                  { Scanner.Scanner.token_type = Scanner.Scanner.Number;
+                    lexeme = "2"; literal = (Value.Value.LoxNumber 2.);
+                    line = 1 };
+                  value = (Value.Value.LoxNumber 2.) })
+             })
+         ])
+    ]
+  }
+utop[8]>
+#+END_SRC
+
+Notice how =utop= now knows how to print the =Scopes.t= and =Depths.t= types,
+like =scopes = { y: declared, }; depths = {};=, instead of just =scopes =
+<abstr>; depths = <abstr>;=. This technique is incredibly useful for debugging
+by tracing functions in the REPL and using the REPL interactively in general.
+
+I hope this overview of interactive OCaml development with =utop= was useful.
+Even though OCaml is a language that has an uncompromisingly strict static type
+system, it's still possible to get some of the useful interactive features
+of more dynamic languages like Lisp through a configurable plugin-based REPL and
+syntax extensions that help minimize boilerplate. Sometimes you really can have
+your cake and eat it too!
+
+* Footnotes
+* COMMENT Local Variables                          :ARCHIVE:
+# Local Variables:
+# eval: (org-hugo-auto-export-mode)
+# End:

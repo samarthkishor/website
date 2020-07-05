@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OCaml on Samarth Kishor&#39;s Homepage</title>
+    <link>http://example.org/tags/ocaml/</link>
+    <description>Recent content in OCaml on Samarth Kishor&#39;s Homepage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Samarth Kishor 2020</copyright>
+    <lastBuildDate>Sun, 08 Mar 2020 22:06:00 -0400</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Interactive OCaml Development</title>
+      <link>http://example.org/posts/interactive_ocaml_development/</link>
+      <pubDate>Sun, 08 Mar 2020 22:06:00 -0400</pubDate>
+      
+      <guid>http://example.org/posts/interactive_ocaml_development/</guid>
+      <description>Interactive development features are mostly found in dynamically-typed interpreted programming languages like Python or JavaScript. While OCaml is a statically-typed compiled language, it is still possible to program in an interactive style using a REPL. However, OCaml will never be quite as flexible and interactive as something like Lisp because of its greatest feature: the strong static type system.
+Testing functions using the REPL One of the nicest features of OCaml is that is has both a byte-code compiler (ocamlc) and a native-code compiler (ocamlopt).</description>
+    </item>
+    
+  </channel>
+</rss>

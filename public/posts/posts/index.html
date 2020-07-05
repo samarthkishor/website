@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Samarth&#39;s Blog | Samarth Kishor&#39;s Homepage</title>
+
+
+
+<link href="http://example.org/index.xml" rel="alternate" type="application/rss+xml" title="Samarth Kishor&#39;s Homepage" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="http://example.org/posts/posts/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="http://example.org/">
+          <h1 id="nav-heading" class="title is-4">Samarth Kishor&#39;s Homepage</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="github" href='https://github.com/samarthkishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:samarthkishor1@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/samarth-kishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">June 29, 2020</h2>
+    <h1 class="title">Samarth&#39;s Blog</h1>
+    
+    <div class="content">
+      <h2 id="interactive-ocaml-development">Interactive OCaml Development</h2>
+<p>Interactive development features are mostly found in dynamically-typed
+interpreted programming languages like Python or JavaScript. While OCaml is a
+statically-typed compiled language, it is still possible to program in an
+interactive style using a REPL. However, OCaml will never be quite as flexible
+and interactive as something like Lisp because of its greatest feature: the
+strong static type system.</p>
+<h3 id="testing-functions-using-the-repl">Testing functions using the REPL</h3>
+<p>One of the nicest features of OCaml is that is has both a byte-code compiler
+(<code>ocamlc</code>) and a native-code compiler (<code>ocamlopt</code>). This means that you can
+develop programs in an interactive, <a href="http://www.paulgraham.com/progbot.html">bottom-up</a> style using the REPL. Bottom-up
+development is a technique most-often leveraged by Lisp programmers in which you
+can write a single function, compile it and send it to the REPL, and then test
+that function interactively in the REPL. OCaml&rsquo;s fast bytecode compiler makes it
+possible to use this technique that is usually unique to Lisps and interpreted
+languages.</p>
+<h4 id="sending-code-to-the-repl-in-emacs">Sending code to the REPL in Emacs</h4>
+<p>I&rsquo;ll describe the process for interactive development using Emacs which is my
+text editor of choice. Similar techniques should exist for other editors such as
+VS Code or Vim.</p>
+<p>OCaml&rsquo;s REPL is called <code>utop</code> and it has a lot of nice features that make it
+well-suited for interactive development. If you&rsquo;re using Emacs, you can send
+your OCaml code to <code>utop</code> to be evaluated. Here&rsquo;s an example of using <code>utop</code> to
+test a single function.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#66d9ef">open</span> <span style="color:#a6e22e">Base</span>
+
+<span style="color:#66d9ef">let</span> sum_list <span style="color:#66d9ef">list</span> <span style="color:#f92672">=</span> List.fold <span style="color:#f92672">~</span>f<span style="color:#f92672">:(</span> <span style="color:#f92672">+</span> <span style="color:#f92672">)</span> <span style="color:#f92672">~</span>init<span style="color:#f92672">:</span>0 <span style="color:#66d9ef">list</span>
+</code></pre></div><p>To send this code to <code>utop</code>, highlight it and press <code>C-x C-r</code> (or <code>M-x utop-eval-region RET</code>). You can even send an entire buffer to <code>utop</code> by pressing
+<code>C-c C-b</code> via the function <code>utop-eval-buffer</code>. If you use the <code>dune</code> build
+system and configure Emacs appropriately (instructions on how to do this are in
+the <a href="https://github.com/ocaml-community/utop#main-setup">utop documentation</a>), a dialog will pop up saying: &ldquo;utop command line: opam
+config exec &ndash; dune utop . &ndash; -emacs&rdquo;. Press <code>RET</code> to evaluate the code.</p>
+<p>You might have seen a message saying &ldquo;Error: unbound module Base&rdquo;. This code
+uses <a href="https://opensource.janestreet.com/base/">Jane Street&rsquo;s Base alternative standard library</a> which makes things a bit
+more complicated, since <code>utop</code> does not know about Base by default.</p>
+<p>To solve this, create a new file in the same directory called <code>.ocamlinit</code>.
+<code>utop</code> reads this file before starting and executes the commands specified. You
+just need to include a single line to load the Base library into <code>utop</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#f92672">#</span>require <span style="color:#e6db74">&#34;base&#34;</span><span style="color:#f92672">;;</span>
+</code></pre></div><p>Now try the previous steps again to load the <code>sum_list</code> function into <code>utop</code>. If
+this still doesn&rsquo;t work, make sure your <code>opam</code> environment is set up correctly
+by running the command <code>opam switch</code> in a terminal and following the
+instructions.</p>
+<p>Once everything is working, go ahead and test the function in the REPL by
+running <code>sum_list [1; 2; 3];;</code> (the double semicolons at the end of the line are
+important because <code>utop</code> uses them to mark the end of an expression). If you
+want to make changes to the function, simply switch back to the OCaml buffer,
+edit the code, and send it back to <code>utop</code>.</p>
+<h4 id="working-with-multiple-files-in-the-repl">Working with multiple files in the REPL</h4>
+<p>The technique I described above works great within a single file, but things get
+complicated once you send code from multiple files to the same <code>utop</code> instance.
+For example, say you made the <code>sum_list</code> function within a file called
+<code>test.ml</code> and sent that code to <code>utop</code>. Now you want to use <code>Test.sum_list</code>
+within another file, so you create a new file called <code>use_test.ml</code> which
+implements a new function:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#66d9ef">let</span> double_sum_list <span style="color:#66d9ef">list</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Test.sum_list <span style="color:#66d9ef">list</span><span style="color:#f92672">)</span> <span style="color:#f92672">*</span> 2
+</code></pre></div><p>Now when you go to send this new function to <code>utop</code>, you run into an error:
+&ldquo;Error: Unbound module Test&rdquo;.</p>
+<p>Here&rsquo;s the full sample <code>utop</code> session:</p>
+<pre><code class="language-nil" data-lang="nil">utop[0]&gt; open Base
+
+let sum_list list = List.fold ~f:( + ) ~init:0 list
+;;
+val sum_list : int list -&gt; int = &lt;fun&gt;
+utop[1]&gt; sum_list [1; 2; 3];;
+- : int = 6
+utop[2]&gt; let double_sum_list list = (Test.sum_list list) * 2
+;;
+
+Error: Unbound module Test
+</code></pre><p>Since OCaml isn&rsquo;t really made to be an interactive programming language, there
+isn&rsquo;t a clean solution for this problem as far as I&rsquo;m aware. However, you can
+hack around this using the same <code>.ocamlinit</code> file that I mentioned before.</p>
+<p>Kill <code>utop</code> and modify the <code>.ocamlinit</code> file to look like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#f92672">#</span>require <span style="color:#e6db74">&#34;base&#34;</span><span style="color:#f92672">;;</span>
+<span style="color:#f92672">#</span>mod_use <span style="color:#e6db74">&#34;test.ml&#34;</span><span style="color:#f92672">;;</span>
+</code></pre></div><p>The <code>#mod_use</code> function tells <code>utop</code> to import the given file into the REPL as a
+module. This is important because it lets us call <code>sum_list</code> as <code>Test.sum_list</code>.
+<code>#mod_use</code> essentially wraps up the functions from the file into a module and
+sends that module to be evaluated in the REPL, which is basically how the OCaml
+compiler treats OCaml files. We don&rsquo;t want to change our development style to
+work with the REPL since <code>utop</code> is configurable enough.</p>
+<p>There is one caveat with this approach: you have to edit <code>.ocamlinit</code> and
+restart <code>utop</code> whenever you create a new file. If you switch files (say you were
+sending code from <code>use_test.ml</code> to the REPL but now want to work with
+<code>test.ml</code>), you have to restart <code>utop</code> each time to ensure that it has the most
+up-to-date version of all your files/modules. This is a bit of a pain and I&rsquo;m
+not sure if there&rsquo;s a solution to this problem given OCaml&rsquo;s static nature.</p>
+<h3 id="pretty-printing">Pretty-printing</h3>
+<p>A major part of interactive development is seeing the results of functions in
+the REPL. Since OCaml has a strong type system without dynamic dispatch, you can
+only print strings&mdash;this means that you have to write functions to convert your
+user-defined types (which are everywhere in idiomatic OCaml code) to strings
+each time you want to print them. This is a pain, but luckily there&rsquo;s an elegant
+solution: <a href="https://github.com/ocaml-ppx/ppx%5Fderiving#plugin-show">ppx</a>.</p>
+<p><code>ppx</code> is a syntax extension to OCaml which acts as a macro that automatically
+generates code to pretty-print a custom type (<code>ppx_deriving.show</code>), generate
+equality functions (<code>ppx_deriving.eq</code>), etc.</p>
+<p>To pretty-print custom types annotated with <code>[@@deriving show]</code> in <code>utop</code>, you&rsquo;ll need to
+once again modify the <code>.ocamlinit</code> file and add the following line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#f92672">#</span>install_printer Module.pp<span style="color:#f92672">;;</span>
+</code></pre></div><p>where <code>Module</code> is the name of the module which has the corresponding <code>pp</code>
+function. Here&rsquo;s an example of one such module that pretty-prints a custom
+hash-table with the <code>Depths</code> module, where <code>type t</code>&hellip; <code>[@@deriving show]</code> refers
+to the <code>Resolver.t</code> type:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#66d9ef">module</span> <span style="color:#a6e22e">Depths</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">struct</span>
+  <span style="color:#66d9ef">type</span> t <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">string</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">)</span> Hashtbl.t
+
+  <span style="color:#66d9ef">let</span> pp ppf values <span style="color:#f92672">=</span>
+    Caml.Format.open_hovbox 1<span style="color:#f92672">;</span>
+    Caml.Format.print_cut ()<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> Hashtbl.length values <span style="color:#f92672">=</span> 0
+    <span style="color:#66d9ef">then</span> Caml.Format.fprintf ppf <span style="color:#e6db74">&#34;@[&lt;hov 2&gt;{}@]&#34;</span>
+    <span style="color:#66d9ef">else</span> <span style="color:#f92672">(</span>
+      Caml.Format.fprintf ppf <span style="color:#e6db74">&#34;@[&lt;hov 1&gt;{@ @]&#34;</span><span style="color:#f92672">;</span>
+      Hashtbl.iteri values <span style="color:#f92672">~</span>f<span style="color:#f92672">:(</span><span style="color:#66d9ef">fun</span> <span style="color:#f92672">~</span>key <span style="color:#f92672">~</span>data <span style="color:#f92672">-&gt;</span>
+          Caml.Format.fprintf ppf <span style="color:#e6db74">&#34;@[&lt;hov 2&gt;%s: %d,@ @]&#34;</span> key data<span style="color:#f92672">);</span>
+      Caml.Format.fprintf ppf <span style="color:#e6db74">&#34;@[&lt;hov 1&gt;}@]&#34;</span><span style="color:#f92672">);</span>
+    Caml.Format.close_box ()
+  <span style="color:#f92672">;;</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">type</span> t <span style="color:#f92672">=</span>
+  <span style="color:#f92672">{</span> statements <span style="color:#f92672">:</span> Parser.statement <span style="color:#66d9ef">list</span>
+  <span style="color:#f92672">;</span> scopes <span style="color:#f92672">:</span> Scopes.t
+  <span style="color:#f92672">;</span> depths <span style="color:#f92672">:</span> Depths.t
+  <span style="color:#f92672">;</span> parsed_statements <span style="color:#f92672">:</span> Parser.statement <span style="color:#66d9ef">list</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">[@@</span>deriving show<span style="color:#f92672">]</span>
+</code></pre></div><p>Here are the corresponding lines in <code>.ocamlinit</code> which tell <code>utop</code> which types
+to pretty-print (the above code is from a file called <code>resolver.ml</code>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#f92672">#</span>install_printer Resolver.pp<span style="color:#f92672">;;</span>
+<span style="color:#f92672">#</span>install_printer Resolver.Depths.pp<span style="color:#f92672">;;</span>
+</code></pre></div><p>Now <code>utop</code> knows to call the respective <code>pp</code> function whenever it needs to print
+type information for the corresponding module. I needed to write the custom
+<code>Depths.pp</code> function by hand since <code>ppx_deriving.show</code> is not powerful enough to
+work for all custom types. This is one drawback of strong static type systems.</p>
+<h3 id="tracing-function-execution">Tracing function execution</h3>
+<p>Say you want to now debug the <code>resolve</code> function in your <code>Resolver</code> module, but
+the return value of <code>resolve</code> is of type <code>Resolver.t</code>. If you didn&rsquo;t have the
+<code>[@@deriving show]</code> <code>ppx</code> annotation on <code>type t</code> and didn&rsquo;t write the custom
+<code>Scopes.pp</code> and <code>Depths.pp</code> functions, this would be part of the output of
+tracing a call to <code>Resolver.resolve</code> in <code>utop</code> (I cut off the rest of the output
+since it wasn&rsquo;t important):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml">utop<span style="color:#f92672">[</span>1<span style="color:#f92672">]&gt;</span> <span style="color:#f92672">#</span>trace Resolver.resolve<span style="color:#f92672">;;</span>
+Resolver.resolve is now traced<span style="color:#f92672">.</span>
+utop<span style="color:#f92672">[</span>2<span style="color:#f92672">]&gt;</span> Scanner.make_scanner <span style="color:#e6db74">&#34;var x = 1; { var y = 2; }&#34;</span>
+<span style="color:#f92672">|&gt;</span> Scanner.scan_tokens
+<span style="color:#f92672">|&gt;</span> Parser.make_parser
+<span style="color:#f92672">|&gt;</span> Parser.parse
+<span style="color:#f92672">|&gt;</span> Resolver.make_resolver
+<span style="color:#f92672">|&gt;</span> Resolver.resolve<span style="color:#f92672">;;</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span>Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[</span>Parser.<span style="color:#a6e22e">VarDeclaration</span>
+      <span style="color:#f92672">{</span>Parser.name <span style="color:#f92672">=</span>
+        <span style="color:#f92672">{</span>Scanner.token_type <span style="color:#f92672">=</span> Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span> lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span>
+         literal <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1<span style="color:#f92672">};</span>
+       init <span style="color:#f92672">=</span>
+        Parser.<span style="color:#a6e22e">Literal</span>
+         <span style="color:#f92672">{</span>Parser.token <span style="color:#f92672">=</span>
+           <span style="color:#f92672">{</span>Scanner.token_type <span style="color:#f92672">=</span> Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span> lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span>
+            literal <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.;</span> line <span style="color:#f92672">=</span> 1<span style="color:#f92672">};</span>
+          <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.}};</span>
+     Parser.<span style="color:#a6e22e">Block</span>
+      <span style="color:#f92672">[</span>Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span>Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span>Scanner.token_type <span style="color:#f92672">=</span> Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span> lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span>
+           literal <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1<span style="color:#f92672">};</span>
+         init <span style="color:#f92672">=</span>
+          Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span>Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span>Scanner.token_type <span style="color:#f92672">=</span> Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span> lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span>
+              literal <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.;</span> line <span style="color:#f92672">=</span> 1<span style="color:#f92672">};</span>
+            <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.}}]];</span>
+   scopes <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>abstr<span style="color:#f92672">&gt;;</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>abstr<span style="color:#f92672">&gt;;</span>
+</code></pre></div><p>Notice this last line: <code>scopes = &lt;abstr&gt;; depths = &lt;abstr&gt;;</code>. The <code>&lt;abstr&gt;</code>
+value indicates that OCaml does not know how to print values of the <code>Scopes.t</code>
+or <code>Depths.t</code> type since there are no dedicated <code>pp</code> functions for those types.</p>
+<p>Once I added the <code>[@@deriving show]</code> annotation back to <code>type t</code>, wrote the
+<code>Scopes.pp</code> and <code>Depths.pp</code> functions, and added the relevant <code>#install_printer</code>
+lines to <code>.ocamlinit</code>, this was the full output of the same trace to
+<code>Resolver.resolve</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml">utop<span style="color:#f92672">[</span>1<span style="color:#f92672">]&gt;</span> <span style="color:#f92672">#</span>trace Resolver.resolve<span style="color:#f92672">;;</span>
+Resolver.resolve is now traced<span style="color:#f92672">.</span>
+utop<span style="color:#f92672">[</span>2<span style="color:#f92672">]&gt;</span> Scanner.make_scanner <span style="color:#e6db74">&#34;var x = 1; { var y = 2; }&#34;</span>
+<span style="color:#f92672">|&gt;</span> Scanner.scan_tokens
+<span style="color:#f92672">|&gt;</span> Parser.make_parser
+<span style="color:#f92672">|&gt;</span> Parser.parse
+<span style="color:#f92672">|&gt;</span> Resolver.make_resolver
+<span style="color:#f92672">|&gt;</span> Resolver.resolve<span style="color:#f92672">;;</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">--&gt;</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">})</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> y<span style="color:#f92672">:</span> declared<span style="color:#f92672">,</span> <span style="color:#f92672">};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">--&gt;</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> y<span style="color:#f92672">:</span> declared<span style="color:#f92672">,</span> <span style="color:#f92672">};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">--&gt;</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> y<span style="color:#f92672">:</span> declared<span style="color:#f92672">,</span> <span style="color:#f92672">};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">&lt;--</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">--&gt;</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+Resolver.resolve <span style="color:#f92672">--&gt;</span>
+  <span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+      <span style="color:#f92672">];</span>
+    scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+    parsed_statements <span style="color:#f92672">=</span>
+    <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+        <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+          <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+            lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+          init <span style="color:#f92672">=</span>
+          <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+             <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span>
+                 line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+          <span style="color:#f92672">});</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+         <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+             <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+               <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+                 lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+               init <span style="color:#f92672">=</span>
+               <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                  <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                    <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                      lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                      line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                    <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+               <span style="color:#f92672">})</span>
+           <span style="color:#f92672">])</span>
+      <span style="color:#f92672">]</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">-</span> <span style="color:#f92672">:</span> Resolver.t <span style="color:#f92672">=</span>
+<span style="color:#f92672">{</span> Resolver.Resolver.statements <span style="color:#f92672">=</span>
+  <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">Expression</span>
+      <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+         <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+           <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+             lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+           <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">}))</span>
+    <span style="color:#f92672">];</span>
+  scopes <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span> depths <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+  parsed_statements <span style="color:#f92672">=</span>
+  <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+      <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+        <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+          lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+        init <span style="color:#f92672">=</span>
+        <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+           <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.);</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 1<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+        <span style="color:#f92672">});</span>
+    <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Block</span>
+       <span style="color:#f92672">[(</span>Parser.Parser.<span style="color:#a6e22e">VarDeclaration</span>
+           <span style="color:#f92672">{</span> Parser.Parser.name <span style="color:#f92672">=</span>
+             <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Identifier</span><span style="color:#f92672">;</span>
+               lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;y&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> Value.Value.<span style="color:#a6e22e">LoxNil</span><span style="color:#f92672">;</span> line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+             init <span style="color:#f92672">=</span>
+             <span style="color:#f92672">(</span>Parser.Parser.<span style="color:#a6e22e">Literal</span>
+                <span style="color:#f92672">{</span> Parser.Parser.token <span style="color:#f92672">=</span>
+                  <span style="color:#f92672">{</span> Scanner.Scanner.token_type <span style="color:#f92672">=</span> Scanner.Scanner.<span style="color:#a6e22e">Number</span><span style="color:#f92672">;</span>
+                    lexeme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">;</span> literal <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.);</span>
+                    line <span style="color:#f92672">=</span> 1 <span style="color:#f92672">};</span>
+                  <span style="color:#66d9ef">value</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Value.Value.<span style="color:#a6e22e">LoxNumber</span> 2<span style="color:#f92672">.)</span> <span style="color:#f92672">})</span>
+             <span style="color:#f92672">})</span>
+         <span style="color:#f92672">])</span>
+    <span style="color:#f92672">]</span>
+  <span style="color:#f92672">}</span>
+utop<span style="color:#f92672">[</span>8<span style="color:#f92672">]&gt;</span>
+</code></pre></div><p>Notice how <code>utop</code> now knows how to print the <code>Scopes.t</code> and <code>Depths.t</code> types,
+like <code>scopes = { y: declared, }; depths = {};</code>, instead of just <code>scopes = &lt;abstr&gt;; depths = &lt;abstr&gt;;</code>. This technique is incredibly useful for debugging
+by tracing functions in the REPL and using the REPL interactively in general.</p>
+<p>I hope this overview of interactive OCaml development with <code>utop</code> was useful.
+Even though OCaml is a language that has an uncompromisingly strict static type
+system, it&rsquo;s still possible to get some of the useful interactive features
+of more dynamic languages like Lisp through a configurable plugin-based REPL and
+syntax extensions that help minimize boilerplate. Sometimes you really can have
+your cake and eat it too!</p>
+
+      
+    </div>
+    
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; Samarth Kishor 2020</p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+
+</body>
+</html>
+
