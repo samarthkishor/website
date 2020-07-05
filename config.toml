@@ -43,12 +43,8 @@ platforms = ["github","linkedin","email"]
 "/about" = "About"
 "/posts" = "Archive"
 
-# [params.matomoAnalytics]
-# siteID = 1
-# rootURL = "//matomo.example.com/"
-
-# [params.fathomAnalytics]
-# rootURL = "//fathom.example.com/"
+[params.goatcounterAnalytics]
+rootURL = "https://samarth-personal-site.goatcounter.com/count"
 
 [taxonomies]
 tag ="tags"
