@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Typed APIs in Python with dataclasses and NamedTuples | Samarth&#39;s Blog</title>
+
+
+
+<link href="https://samarthkishor.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Samarth&#39;s Blog" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://samarthkishor.github.io/css/styles.css'><link rel='stylesheet' href='https://samarthkishor.github.io/css/vertical-timeline.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="https://samarthkishor.github.io/posts/typed_apis_in_python/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="https://samarthkishor.github.io">
+          <h1 id="nav-heading" class="title is-4">Samarth&#39;s Blog</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="github" href='https://github.com/samarthkishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/samarth-kishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:samarthkishor1@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+      <div class="nav-left"><a class="nav-item" href="/about">
+          <h2 class="title is-5">About</h2>
+        </a><a class="nav-item" href="/posts">
+          <h2 class="title is-5">Archive</h2>
+        </a></div>
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/programming/">#programming</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/python/">#python</a>
+  
+
+
+      
+    </div>
+    <h2 class="subtitle is-6">August 13, 2020</h2>
+    <h1 class="title">Typed APIs in Python with dataclasses and NamedTuples</h1>
+    
+    <div class="content">
+      <p>Why would Python programmers ever care about types? While Python doesn&rsquo;t check any types statically (before running the program), it does perform extensive run-time type checking. Checking types at run-time without any implicit casts makes the language strongly-typed and dynamically-typed, as opposed to a language like C which is weakly-typed and statically-typed. This is an important distinction, but I won&rsquo;t go over the differences between strong and weak typing in this post.</p>
+<p>Newer versions of Python 3 have support for type annotations which gives the programmer some more information about types. Tools like <code>mypy</code> perform some basic static type checking. However, these static type-checkers are not all-powerful and sometimes it&rsquo;s useful to provide some extra type-safety dynamically at run-time.</p>
+<h2 id="the-api">The API</h2>
+<p>Imagine you&rsquo;re writing a Python script that uses a stock market API. The API provides a GET method called <code>get_stocks</code> which returns some JSON data containing information about three very specific stocks you&rsquo;re interested in (this is important because we know exactly what data the API method will return and therefore can model it). This is a bit hand-wavy, but the actual API call doesn&rsquo;t matter&mdash;we only care about the JSON return value.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+<span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stocks</span>() <span style="color:#f92672">-&gt;</span> str:
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    API method returning some JSON data
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+
+    <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>dumps(
+        {
+            <span style="color:#e6db74">&#34;TSLA&#34;</span>: {<span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;1000.00&#34;</span>},
+            <span style="color:#e6db74">&#34;AMZN&#34;</span>: {<span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;3000.00&#34;</span>},
+            <span style="color:#e6db74">&#34;AAPL&#34;</span>: {<span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;400.00&#34;</span>}
+        }
+    )
+
+
+stock_data <span style="color:#f92672">=</span> get_stocks()
+pprint(stock_data)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Python 3.8.5 (default, Jul 21 2020, 10:48:26)
+[Clang 11.0.3 (clang-1103.0.32.62)] on darwin
+Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
+(&#39;{&#34;TSLA&#34;: {&#34;price&#34;: &#34;1000.00&#34;}, &#34;AMZN&#34;: {&#34;price&#34;: &#34;3000.00&#34;}, &#34;AAPL&#34;: &#39;
+ &#39;{&#34;price&#34;: &#34;400.00&#34;}}&#39;)
+&gt;&gt;&gt; python.el: native completion setup loaded
+</code></pre></div><p>We&rsquo;d usually consume this API by serializing the JSON string to a Python <code>dict</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_tsla_price</span>(stock_json_data: str) <span style="color:#f92672">-&gt;</span> float:
+    <span style="color:#66d9ef">return</span> float(json<span style="color:#f92672">.</span>loads(stock_json_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>][<span style="color:#e6db74">&#34;price&#34;</span>])
+
+<span style="color:#66d9ef">print</span>(get_tsla_price(stock_data))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">1000.0
+</code></pre></div><p>This is alright, but remembering that the <code>price</code> field is a string can get tedious. Let&rsquo;s try and do better by defining the type of this JSON structure.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Dict
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">stocks_to_dict</span>(stock_json_data: str) <span style="color:#f92672">-&gt;</span> Dict[str, Dict[str, float]]:
+    <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>loads(stock_json_data)
+
+pprint(stocks_to_dict(stock_data))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{&#39;AAPL&#39;: {&#39;price&#39;: &#39;400.00&#39;},
+ &#39;AMZN&#39;: {&#39;price&#39;: &#39;3000.00&#39;},
+ &#39;TSLA&#39;: {&#39;price&#39;: &#39;1000.00&#39;}}
+</code></pre></div><p>Now a static type-checker like <code>mypy</code> can assume that <code>stock_data[&quot;TSLA&quot;][&quot;price&quot;]</code> is a <code>float</code>.</p>
+<p>What if the API changes, and the <code>get_stocks</code> method also includes the company name and the percent change (I&rsquo;m not a stock market expert so this might not be the correct term) in each stock JSON object?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_stocks</span>() <span style="color:#f92672">-&gt;</span> str:
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    API method returning some JSON data
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+
+    <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>dumps(
+        {
+            <span style="color:#e6db74">&#34;TSLA&#34;</span>: {
+                <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Tesla, Inc.&#34;</span>,
+                <span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;1000.00&#34;</span>,
+                <span style="color:#e6db74">&#34;percent_change&#34;</span>: <span style="color:#e6db74">&#34;+2.03%&#34;</span>
+            },
+            <span style="color:#e6db74">&#34;AMZN&#34;</span>: {
+                <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Amazon.com, Inc.&#34;</span>,
+                <span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;3000.00&#34;</span>,
+                <span style="color:#e6db74">&#34;percent_change&#34;</span>: <span style="color:#e6db74">&#34;-1.01%&#34;</span>
+            },
+            <span style="color:#e6db74">&#34;AAPL&#34;</span>: {
+                <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Apple Inc.&#34;</span>,
+                <span style="color:#e6db74">&#34;price&#34;</span>: <span style="color:#e6db74">&#34;400.00&#34;</span>,
+                <span style="color:#e6db74">&#34;percent_change&#34;</span>: <span style="color:#e6db74">&#34;-1.51%&#34;</span>
+            }
+        }
+    )
+
+stock_data <span style="color:#f92672">=</span> get_stocks()
+
+pprint(stock_data)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(&#39;{&#34;TSLA&#34;: {&#34;name&#34;: &#34;Tesla, Inc.&#34;, &#34;price&#34;: &#34;1000.00&#34;, &#34;percent_change&#34;: &#39;
+ &#39;&#34;+2.03%&#34;}, &#34;AMZN&#34;: {&#34;name&#34;: &#34;Amazon.com, Inc.&#34;, &#34;price&#34;: &#34;3000.00&#34;, &#39;
+ &#39;&#34;percent_change&#34;: &#34;-1.01%&#34;}, &#34;AAPL&#34;: {&#34;name&#34;: &#34;Apple Inc.&#34;, &#34;price&#34;: &#39;
+ &#39;&#34;400.00&#34;, &#34;percent_change&#34;: &#34;-1.51%&#34;}}&#39;)
+</code></pre></div><p>What does the type signature for the serialized <code>dict</code> even look like? We wouldn&rsquo;t want to keep the percent change as a string because that would be painful to work with.</p>
+<p>This is my best guess but it&rsquo;s still not great.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Dict, Union
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">stocks_to_dict</span>(stock_json_data: str) <span style="color:#f92672">-&gt;</span> Dict[str, Dict[str, Union[float, str]]]:
+    <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>loads(stock_json_data)
+
+
+pprint(stocks_to_dict(stock_data))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{&#39;AAPL&#39;: {&#39;name&#39;: &#39;Apple Inc.&#39;, &#39;percent_change&#39;: &#39;-1.51%&#39;, &#39;price&#39;: &#39;400.00&#39;},
+ &#39;AMZN&#39;: {&#39;name&#39;: &#39;Amazon.com, Inc.&#39;,
+          &#39;percent_change&#39;: &#39;-1.01%&#39;,
+          &#39;price&#39;: &#39;3000.00&#39;},
+ &#39;TSLA&#39;: {&#39;name&#39;: &#39;Tesla, Inc.&#39;,
+          &#39;percent_change&#39;: &#39;+2.03%&#39;,
+          &#39;price&#39;: &#39;1000.00&#39;}}
+</code></pre></div><p>Most static typecheckers for Python will not complain that this <code>dict</code> still doesn&rsquo;t reflect the type of the function. Let&rsquo;s add some type conversions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Dict, Union
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">stocks_to_dict</span>(stock_json_data: str) <span style="color:#f92672">-&gt;</span> Dict[str, Dict[str, Union[float, str]]]:
+    stocks_dict <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(stock_json_data)
+    <span style="color:#66d9ef">for</span> symbol <span style="color:#f92672">in</span> stocks_dict<span style="color:#f92672">.</span>keys():
+        stocks_dict[symbol][<span style="color:#e6db74">&#34;price&#34;</span>] <span style="color:#f92672">=</span> float(stocks_dict[symbol][<span style="color:#e6db74">&#34;price&#34;</span>])
+    <span style="color:#66d9ef">return</span> stocks_dict
+
+
+stocks_dict <span style="color:#f92672">=</span> stocks_to_dict(stock_data)
+pprint(stocks_dict)
+<span style="color:#66d9ef">print</span>(isinstance(stocks_dict[<span style="color:#e6db74">&#34;TSLA&#34;</span>][<span style="color:#e6db74">&#34;price&#34;</span>], float))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{&#39;AAPL&#39;: {&#39;name&#39;: &#39;Apple Inc.&#39;, &#39;percent_change&#39;: &#39;-1.51%&#39;, &#39;price&#39;: 400.0},
+ &#39;AMZN&#39;: {&#39;name&#39;: &#39;Amazon.com, Inc.&#39;,
+          &#39;percent_change&#39;: &#39;-1.01%&#39;,
+          &#39;price&#39;: 3000.0},
+ &#39;TSLA&#39;: {&#39;name&#39;: &#39;Tesla, Inc.&#39;, &#39;percent_change&#39;: &#39;+2.03%&#39;, &#39;price&#39;: 1000.0}}
+True
+</code></pre></div><h2 id="dynamically-adding-types">Dynamically adding types</h2>
+<p>This works, but I&rsquo;m lazy and don&rsquo;t want to write a specialized <code>x_to_dict</code> function for every single API method. I want something like a dynamically type-safe C <code>struct</code>&mdash;a data-structure that automatically serializes a <code>dict</code> with the correct type conversions. Another benefit of this <code>struct</code> is that it provides some basic documentation for what kinds of fields the API returns and their types. Dictionaries are still great and definitely have their place in Python programs, but in my opinion, an object called <code>Stocks</code> is a lot more descriptive and amenable to refactoring than <code>Dict[str, Dict[str, Union[float, str]]]</code>.</p>
+<p>Here&rsquo;s an example of some of the functionality that I want:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)  <span style="color:#75715e"># -&gt; nice representation of the object</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>price)  <span style="color:#75715e"># -&gt; 1000.0</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; 0.0203</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AMZN<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; -0.0101</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AAPL<span style="color:#f92672">.</span>name)  <span style="color:#75715e"># -&gt; &#34;Apple Inc.&#34;</span>
+</code></pre></div><p>Notice how the <code>price</code> and <code>percent_change</code> attributes will automatically get converted to <code>floats</code>.</p>
+<p>Let&rsquo;s take a stab at implementing this with a regular class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">percent_to_float</span>(percent: str) <span style="color:#f92672">-&gt;</span> float:
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    Converts a percentage string to a float.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    e.g. percent_to_float(&#34;+1.01%&#34;) -&gt; 0.0101
+</span><span style="color:#e6db74">    e.g. percent_to_float(&#34;-22.22%&#34;) -&gt; -0.2222
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+
+    neg <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> percent[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> neg <span style="color:#f92672">*</span> float(percent[<span style="color:#ae81ff">1</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stocks</span>:
+   <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+       <span style="color:#66d9ef">for</span> symbol, info <span style="color:#f92672">in</span> kwargs<span style="color:#f92672">.</span>items():
+           <span style="color:#75715e"># e.g. sets self.TSLA to an empty object</span>
+           setattr(self, symbol, type(<span style="color:#e6db74">&#34;&#34;</span>, (), {})())
+           <span style="color:#75715e"># e.g. sets self.TSLA.name to &#34;Tesla, Inc.&#34;</span>
+           setattr(getattr(self, symbol), <span style="color:#e6db74">&#34;name&#34;</span>, info[<span style="color:#e6db74">&#34;name&#34;</span>])
+           <span style="color:#75715e"># e.g. sets self.TSLA.price to 1000.0</span>
+           setattr(getattr(self, symbol), <span style="color:#e6db74">&#34;price&#34;</span>, float(info[<span style="color:#e6db74">&#34;price&#34;</span>]))
+           <span style="color:#75715e"># # e.g. sets self.AMZN.percent_change to -0.0101</span>
+           setattr(getattr(self, symbol), <span style="color:#e6db74">&#34;percent_change&#34;</span>,
+                   percent_to_float(info[<span style="color:#e6db74">&#34;percent_change&#34;</span>]))
+
+
+stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)  <span style="color:#75715e"># -&gt; nice representation of the object</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>price)  <span style="color:#75715e"># -&gt; 1000.0</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; 0.0203</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AMZN<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; -0.0101</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AAPL<span style="color:#f92672">.</span>name)  <span style="color:#75715e"># -&gt; &#34;Apple Inc.&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;__main__. object at 0x10cebe700&gt;
+1000.0
+0.0203
+-0.0101
+Apple Inc.
+</code></pre></div><p>This works pretty well! We&rsquo;ve used simple metaprogramming to dynamically create class attributes at run-time, all with the correct types! The only problem is that we&rsquo;d have to add a <code>__repr__</code> method to each dynamically-created object to get a nice representation of <code>stocks.TSLA</code> when printed. Remember, I&rsquo;m lazy so this is clearly too much work.</p>
+<h2 id="type-safety-with-dataclasses">Type-safety with dataclasses</h2>
+<p>Remember that this is Python and there&rsquo;s usually a simple answer to most problems in the standard library. Turns out that <code>NamedTuples</code> and <code>dataclasses</code> both do the trick.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> dataclasses <span style="color:#f92672">import</span> dataclass
+
+
+<span style="color:#a6e22e">@dataclass</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StockInfo</span>:
+    name: str
+    price: float
+    percent_change: float
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__post_init__</span>(self):
+        self<span style="color:#f92672">.</span>price <span style="color:#f92672">=</span> float(self<span style="color:#f92672">.</span>price)
+        self<span style="color:#f92672">.</span>percent_change <span style="color:#f92672">=</span> percent_to_float(self<span style="color:#f92672">.</span>percent_change)
+
+
+<span style="color:#66d9ef">print</span>(StockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>]))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">StockInfo(name=&#39;Tesla, Inc.&#39;, price=1000.0, percent_change=0.0203)
+</code></pre></div><p>That was easy! Now we can simplify the <code>Stock</code> class to use these <code>StockInfo</code> objects.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stocks</span>:
+   <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+       <span style="color:#66d9ef">for</span> symbol, info <span style="color:#f92672">in</span> kwargs<span style="color:#f92672">.</span>items():
+           <span style="color:#75715e"># e.g. sets self.TSLA to StockInfo object</span>
+           setattr(self, symbol, StockInfo(<span style="color:#f92672">**</span>info))
+
+
+stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)  <span style="color:#75715e"># -&gt; nice representation of the object</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>price)  <span style="color:#75715e"># -&gt; 1000.0</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; 0.0203</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AMZN<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; -0.0101</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AAPL<span style="color:#f92672">.</span>name)  <span style="color:#75715e"># -&gt; &#34;Apple Inc.&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">StockInfo(name=&#39;Tesla, Inc.&#39;, price=1000.0, percent_change=0.0203)
+1000.0
+0.0203
+-0.0101
+Apple Inc.
+</code></pre></div><p>As an added bonus, printing out <code>stocks.TSLA</code> gives us a nice representation of the <code>StockInfo</code> object, where before it would print out the raw Python object which isn&rsquo;t that helpful (of course, it&rsquo;s easy enough to add a <code>__repr__</code> method but that&rsquo;s too much work).</p>
+<p>What happens if we try and update the stock?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SpaceX, Inc.&#34;</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">StockInfo(name=&#39;SpaceX, Inc.&#39;, price=1000.0, percent_change=0.0203)
+</code></pre></div><p>This isn&rsquo;t good. I want these objects to be immutable which will prevent a whole class of potential errors.</p>
+<p>Turns out that <code>dataclasses</code> can be immutable with a quick modification to the decorator. That should do the trick?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@dataclass</span>(frozen<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StockInfo</span>:
+    name: str
+    price: float
+    percent_change: float
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__post_init__</span>(self):
+        self<span style="color:#f92672">.</span>price <span style="color:#f92672">=</span> float(self<span style="color:#f92672">.</span>price)
+        self<span style="color:#f92672">.</span>percent_change <span style="color:#f92672">=</span> percent_to_float(self<span style="color:#f92672">.</span>percent_change)
+
+
+<span style="color:#66d9ef">print</span>(StockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>]))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-tQy25p&#34;, line 12, in &lt;module&gt;
+    print(StockInfo(**json.loads(stock_data)[&#34;TSLA&#34;]))
+  File &#34;&lt;string&gt;&#34;, line 6, in __init__
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-tQy25p&#34;, line 8, in __post_init__
+    self.price = float(self.price)
+  File &#34;&lt;string&gt;&#34;, line 4, in __setattr__
+dataclasses.FrozenInstanceError: cannot assign to field &#39;price&#39;
+</code></pre></div><p>Looks like the frozen property gets enforced immediately after the <code>dataclass</code> gets initialized, so there&rsquo;s no way to change the class instance variables after they&rsquo;re set.</p>
+<p>There&rsquo;s a workaround where you can use <code>super().__setattr__</code> to bypass the restrictions on calling <code>setattr</code> directly because of the <code>frozen</code> property. <a href="https://stackoverflow.com/a/54119384/7432268">(relevant StackOverflow post)</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@dataclass</span>(frozen<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StockInfo</span>:
+    name: str
+    price: float
+    percent_change: float
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__post_init__</span>(self):
+        super()<span style="color:#f92672">.</span>__setattr__(<span style="color:#e6db74">&#34;price&#34;</span>, float(self<span style="color:#f92672">.</span>price))
+        super()<span style="color:#f92672">.</span>__setattr__(<span style="color:#e6db74">&#34;percent_change&#34;</span>, percent_to_float(self<span style="color:#f92672">.</span>percent_change))
+
+
+stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)
+
+stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SpaceX, Inc.&#34;</span>  <span style="color:#75715e"># raises an error</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">StockInfo(name=&#39;Tesla, Inc.&#39;, price=1000.0, percent_change=0.0203)
+Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-QVEOq2&#34;, line 15, in &lt;module&gt;
+    stocks.TSLA.name = &#34;SpaceX, Inc.&#34;  # raises an error
+  File &#34;&lt;string&gt;&#34;, line 4, in __setattr__
+dataclasses.FrozenInstanceError: cannot assign to field &#39;name&#39;
+</code></pre></div><p>Looks like this is working properly.</p>
+<h2 id="type-safety-with-namedtuples">Type-safety with NamedTuples</h2>
+<p>If you don&rsquo;t want to use <code>dataclasses</code>, a <code>NamedTuple</code> works just as well. <code>NamedTuples</code> are immutable by default. We want to do the type conversions before the object is actually initialized using <code>__new__</code> because once the <code>NamedTuple</code> is created, it&rsquo;s immutable.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> NamedTuple
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StockInfo</span>(NamedTuple):
+    name: str
+    price: float
+    percent_change: float
+
+    <span style="color:#66d9ef">def</span> __new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+        kwargs[<span style="color:#e6db74">&#34;price&#34;</span>] <span style="color:#f92672">=</span> float(kwargs[<span style="color:#e6db74">&#34;price&#34;</span>])
+        kwargs[<span style="color:#e6db74">&#34;percent_change&#34;</span>] <span style="color:#f92672">=</span> percent_to_float(kwargs[<span style="color:#e6db74">&#34;percent_change&#34;</span>])
+        <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+
+
+<span style="color:#66d9ef">print</span>(StockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>]))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-lQpgrh&#34;, line 4, in &lt;module&gt;
+    class StockInfo(NamedTuple):
+  File &#34;/usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/lib/python3.8/typing.py&#34;, line 1638, in __new__
+    raise AttributeError(&#34;Cannot overwrite NamedTuple attribute &#34; + key)
+AttributeError: Cannot overwrite NamedTuple attribute __new__
+</code></pre></div><p>Turns out we can&rsquo;t modify the <code>__new__</code> method directly to convert the types, but it&rsquo;s possible to hack around this via sub-classing.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> NamedTuple
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">_BaseStockInfo</span>(NamedTuple):
+    name: str
+    price: float
+    percent_change: float
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StockInfo</span>(_BaseStockInfo):
+    <span style="color:#66d9ef">def</span> __new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+        kwargs[<span style="color:#e6db74">&#34;price&#34;</span>] <span style="color:#f92672">=</span> float(kwargs[<span style="color:#e6db74">&#34;price&#34;</span>])
+        kwargs[<span style="color:#e6db74">&#34;percent_change&#34;</span>] <span style="color:#f92672">=</span> percent_to_float(kwargs[<span style="color:#e6db74">&#34;percent_change&#34;</span>])
+        <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+
+
+stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA)
+stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SpaceX, Inc.&#34;</span>  <span style="color:#75715e"># raises an error</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">StockInfo(name=&#39;Tesla, Inc.&#39;, price=1000.0, percent_change=0.0203)
+Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-ayaPng&#34;, line 19, in &lt;module&gt;
+    stocks.TSLA.name = &#34;SpaceX, Inc.&#34;  # raises an error
+AttributeError: can&#39;t set attribute
+</code></pre></div><p>Looks like it&rsquo;s working properly.</p>
+<p>Let&rsquo;s just do a quick check to make sure everything works:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stocks <span style="color:#f92672">=</span> Stocks(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data))
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>price)  <span style="color:#75715e"># -&gt; 1000.0</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>TSLA<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; 0.0203</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AMZN<span style="color:#f92672">.</span>percent_change)  <span style="color:#75715e"># -&gt; -0.0101</span>
+<span style="color:#66d9ef">print</span>(stocks<span style="color:#f92672">.</span>AAPL<span style="color:#f92672">.</span>name)  <span style="color:#75715e"># -&gt; &#34;Apple Inc.&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">1000.0
+0.0203
+-0.0101
+Apple Inc.
+</code></pre></div><p>Now we have a nice strongly-typed wrapper object for our previously stringly-typed JSON data!</p>
+<h2 id="dataclass-vs-namedtuple">Dataclass vs NamedTuple</h2>
+<h3 id="unpacking">Unpacking</h3>
+<p>What if we want to unpack the <code>StockInfo</code> object for multiple-assignment?</p>
+<p>This is easy with <code>NamedTuples</code> since they work just like regular tuples.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tsla <span style="color:#f92672">=</span> NTStockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;TSLA values: &#34;</span>, <span style="color:#f92672">*</span>tsla, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34; | &#34;</span>)
+name, _, percent_change <span style="color:#f92672">=</span> tsla
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;percent change for {name} stock is {percent_change}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">TSLA values:  | Tesla, Inc. | 1000.0 | 0.0203
+percent change for Tesla, Inc. stock is 0.0203
+</code></pre></div><p>The same can&rsquo;t be said for a <code>dataclass</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tsla <span style="color:#f92672">=</span> DCStockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>])
+name, _, percent_change <span style="color:#f92672">=</span> tsla
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;percent change for {name} stock is {percent_change}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;/var/folders/9k/rrglbkg540qc7_jb7g6d9l8r0000gn/T/babel-g6I1LO/python-bbTkBK&#34;, line 2, in &lt;module&gt;
+    name, _, percent_change = tsla
+TypeError: cannot unpack non-iterable StockInfo object
+</code></pre></div><p>We can work around this by using the <code>dataclasses.astuple</code> function, but it&rsquo;s not as intuitive.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> dataclasses
+
+tsla <span style="color:#f92672">=</span> DCStockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;TSLA values: &#34;</span>, <span style="color:#f92672">*</span>dataclasses<span style="color:#f92672">.</span>astuple(tsla), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34; | &#34;</span>)
+name, _, percent_change <span style="color:#f92672">=</span> dataclasses<span style="color:#f92672">.</span>astuple(tsla)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;percent change for {name} stock is {percent_change}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">TSLA values:  | Tesla, Inc. | 1000.0 | 0.0203
+percent change for Tesla, Inc. stock is 0.0203
+</code></pre></div><h3 id="serializing-to-json">Serializing to JSON</h3>
+<p>Since we&rsquo;re dealing with APIs, it&rsquo;s useful to quickly be able to serialize an object to JSON with the correct types.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tsla <span style="color:#f92672">=</span> NTStockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>])
+
+<span style="color:#75715e"># the _asdict() method converts a NamedTuple to a mapping type</span>
+pprint(json<span style="color:#f92672">.</span>dumps(tsla<span style="color:#f92672">.</span>_asdict()))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&#39;{&#34;name&#34;: &#34;Tesla, Inc.&#34;, &#34;price&#34;: 1000.0, &#34;percent_change&#34;: 0.0203}&#39;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> dataclasses
+
+tsla <span style="color:#f92672">=</span> DCStockInfo(<span style="color:#f92672">**</span>json<span style="color:#f92672">.</span>loads(stock_data)[<span style="color:#e6db74">&#34;TSLA&#34;</span>])
+pprint(json<span style="color:#f92672">.</span>dumps(dataclasses<span style="color:#f92672">.</span>asdict(tsla)))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&#39;{&#34;name&#34;: &#34;Tesla, Inc.&#34;, &#34;price&#34;: 1000.0, &#34;percent_change&#34;: 0.0203}&#39;
+</code></pre></div><p>Both approaches work equally well in this case.</p>
+<h3 id="documentation">Documentation</h3>
+<p>The <code>dataclass</code> implementation is, in my opinion, simpler to implement and has nicer built-in documentation via <code>help(StockInfo)</code>.</p>
+<pre><code class="language-nil" data-lang="nil">Help on class StockInfo in module __main__:
+
+class StockInfo(builtins.object)
+ |  StockInfo(name: str, price: float, percent_change: float) -&gt; None
+</code></pre><p>Since our <code>NamedTuple</code> implementation is a sub-class, we have to scroll down a bit to find the attributes of the class in the <code>help</code> output, and the type annotations are hidden away as an <code>OrderedDict</code> in the <code>_fields</code> attribute.</p>
+<pre><code class="language-nil" data-lang="nil"> |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from _BaseStockInfo:
+ |
+ |  name
+ |      Alias for field number 0
+ |
+ |  price
+ |      Alias for field number 1
+ |
+ |  percent_change
+ |      Alias for field number 2
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from _BaseStockInfo:
+ |
+ |  __annotations__ = OrderedDict([('name', &lt;class 'str'&gt;), ('price', ... ...
+ |
+ |  _field_defaults = {}
+ |
+ |  _field_types = OrderedDict([('name', &lt;class 'str'&gt;),
+</code></pre>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; Samarth Kishor 2020</p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+
+<script data-goatcounter="https://samarth-personal-site.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
+
