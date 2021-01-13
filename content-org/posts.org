@@ -6,6 +6,293 @@
 #+DATE: 2020-06-29
 #+STARTUP: logdone
 
+* TODO Teaching University CS from First Principles                      :PL:
+:PROPERTIES:
+:EXPORT_FILE_NAME: university_cs_from_first_principles
+:END:
+
+I'm a fourth-year undergrad CS student at the University of Virginia. UVA has a decently-rated CS curriculum geared towards producing capable software engineers. Based on my experience, the CS department tends to focus on more "practical" software engineering and less on theoretical computer science.
+
+This is a really long post so here's the TLDR:
+  - I think that CS curriculums should be structured around [[https://www.wikipedia.com/wiki/First_principle][First Principles]] to ensure that most students who graduate have a rock-solid base of knowledge without any major gaps. There are only two ways to achieve this:
+    - Lambda Calculus: Start from logic and math, and use a language based on the Lambda Calculus to work your way up the stack (this is better in my opinion). Then switch to using C-like languages based on the Turing Machine in later courses. This does not mean that an intro course should even mention Lambda Calculus! It's just a useful frame of reference.
+    - Turing Machine: Start from von Neumann architecture and machine code and work your way up the stack using a language based on the Turing Machine. Then switch to the Lambda Calculus approach in later courses.
+  - CS curriculums should offer two introductory courses: one for potential majors and another for students who want to learn some basic programming.
+    - The programming course for non-majors should be taught in Python and is basically what most intro CS courses are like today.
+    - The course for majors should be taught in a way that completely evens the playing field for those who have some previous programming experience and those who have none. It should also encourage students to program using concepts they have learned from math and logic (First Principles) instead of teaching students how to think like a machine. I argue that Racket is a good language for teaching such a course.
+  - Universities want to produce graduates who can get good-paying jobs or go to graduate school.
+    - CS graduates who have extremely stong fundamentals are more valuable for the workplace and will find it easier to improve and/or maintain codebases. They will also have an easier time learning new languages and technologies.
+    - Graduate schools want students with strong fundamentals in theoretical computer science who know how to apply theory to solve interesting problems and write papers that will get published.
+
+For reference, UVA has two different CS degrees---BA and BS. I'm a BA which means I don't have to take some courses like OS and Theory of Computation but instead am required to take some interdisciplinary courses in the College of Arts and Sciences that somewhat relate to computing. I will not be focusing on those interdisciplinary courses in this post. The only required BS course that I did not end up taking is Advanced Software Development (it focused on web development in Django, and I already had some experience with that in an internship). BA students cannot take Digital Logic Design so that one doesn't count.
+
+Here are the courses I have taken so far:
+
+| Semester | Course Name                   | Course Number |
+|----------+-------------------------------+---------------|
+|        1 | *Introduction to Programming*   | CS 1111       |
+|        2 | *Discrete Mathematics*          | CS 2102       |
+|        2 | *Software Development Methods*  | CS 2110       |
+|        3 | *Program & Data Representation* | CS 2150       |
+|        4 | *Theory of Computation*         | CS 3102       |
+|        4 | *Algorithms*                    | CS 4102       |
+|        5 | *Computer Architecture*         | CS 3330       |
+|        5 | Programming Languages         | CS 4610       |
+|        6 | *Operating Systems*             | CS 4414       |
+|        7 | Compilers                     | CS 4620       |
+|        7 | Artificial Intelligence       | CS 4710       |
+|        8 | Software Logic                | CS 4501       |
+|        8 | Compilers                     | CS 6620       |
+
+The required courses (for a BS) that I have taken are in bold.
+
+With the exception of my 8th (current) semester, this is pretty representative of the types of courses that a typical CS student at UVA will take. Most people end up taking Advanced Software Development and Databases at some point but tend to avoid theory-heavy courses like Programming Languages and Compilers. UVA's CS curriculum has changed in the past couple years but the core content is mostly the same.
+
+** My Problem with Intro CS Courses and a Possible Solution
+
+Before I say anything else, I want to make it clear that I am in no way criticizing individual CS professors. They have all been incredibly helpful and really want students to succeed. I just disagree with some of the topics that the curriculum emphasizes and the way that the curriculum is fundamentally structured (the new CS course structure at UVA does not solve these problems but is a step in the right direction).
+
+I believe that to truly understand something, you need to learn it from [[https://www.wikiwand.com/en/First_principle][First Principles]]. No math class would ever consider teaching multiplication before addition. Likewise, there are really only two ways to teach an introductory CS course from First Principles
+    - Lambda Calculus (thinking like a mathematician): Start from logic and math, and use a language based on the Lambda Calculus to work your way up the stack. Then switch to using C-like languages based on the Turing Machine in later courses and work your way up the stack from Machine Code.
+    - Turing Machine (thinking like a computer): Start from von Neumann architecture and machine code and work your way up the stack using a language based on the Turing Machine. Then switch to using Lisp- or ML-like languages based on the Lambda Calculus in later courses.
+
+Note that I don't recommend actually introducing Lambda Calculus or Turing Machines this early. They are just useful ways to categorize programming languages and ways of thinking.
+
+[[https://jamesclear.com/first-principles][First Principles]] is an important framework for thinking. SpaceX would never have made a relatively cheap rocket that not only is capable of sending astronauts to the International Space Station, but can autonomously land in order to be reused for future flights. The same thing applies to Computer Science---we will be doomed to never make progress unless we have a strong understanding of the fundamentals of computing.
+
+The first CS class that students take is "Introduction to Programming" which is taught in Python. Python is a fine language, but I don't think that it's a good choice for an introductory CS course for prospective CS majors.
+
+*** The Problem with Imperative Languages
+
+Let's look at how Python handles variables. To someone who has never seen a computer program before, what do you think they would say this program does?
+
+#+begin_src python
+x = 2
+x = x + 1
+#+end_src
+
+I'd be willing to bet that most students would say that =x = x + 1= is impossible. How can =x= be equal to itself plus one? That doesn't make any sense! In math, a variable is something that is bound to a value---you can't change it later on. In CS jargon, this is called immutability.
+
+Brown University uses the Racket programming language for its intro course. Racket makes setting variables explicit so it's an improvement over Python, although its syntax is unusual:
+
+#+begin_src scheme
+(let [[x 2]]
+  (set! x (+ x 1)))
+#+end_src
+
+Prolog, a logic programming language, is one of the few languages that actually follows the math.
+
+#+begin_src prolog
+?- X = 2, X = X + 1.
+false.
+#+end_src
+
+=== is /equality/ in Prolog, not assignment. The Prolog program is trying to answer the question "is it true that when =X= is equal to 2, =X= is equal to =X= plus 1?" Naturally, the answer is =false=---such a question doesn't even make sense in a language like Prolog.
+
+Learning any kind of imperative language like Python, Java, C, etc. as a beginner will not be intuitive. For someone to fully understand what Python is doing when it executes =x = x + 1=, they will need to understand references, de-referencing variables, l-values, r-values, expressions, and statements. The =x= on the left-hand-side of the equals sign is the l-value which means that it's referring to the variable. The =x= on the right-hand-side of the equals sign is an r-value inside of an expression which means that it's the value in memory that the variable =x= points to (the number 2). Those two Python =x= variables are not the same, even though they look the same. On the other hand, the Prolog program is pretty much executable math and logic---=X= is =X=.
+
+OCaml, a functional language in the ML family, makes all of the steps in the Python program more explicit:
+
+#+begin_src ocaml
+let x = ref 1 in
+x := !x + 1
+#+end_src
+
+Here we bind =x= to a reference containing the value 1. Incrementing =x= involves de-referencing the reference to =x= via the =!= operator to get its value and assigning =x= to its old value plus one. Binding values uses === and assignment uses =:==. In my opinion, this is much more clear (even though de-referencing with =!= still looks a little weird to me since I'm so used to C-like languages). Furthermore, you don't even have to know what a statement is---everything in OCaml is an expression that returns something.
+
+However, even introducing the concept of references this early doesn't make much sense to me. To actually understand what a reference is, you need to understand how computers use memory---a topic that UVA's CS curriculum does not cover until CS 2150 (or the equivalent low-level programming course taught in C or C++).
+
+Let's go back to the topic of teaching from First Principles. I said there are only two ways to structure an intro CS course this way: bottom-up or top-down. Either way works, but I think it's far easier to justify the top-down approach. Students would probably get bored if all they can do for the first few classes is flip bits and write Assembly. With a top-down approach, they can write high-level code that does interesting things within a few short days.
+
+Python is supposed to be a high-level language though! That's why so many CS departments start with Python instead of C, right? The problem is not that Python is "high-level", but that it forces the programmer to think like a machine.
+
+Let's go back to the earlier example:
+
+#+begin_src python
+x = 1
+x = x + 1
+#+end_src
+
+To understand what this does, you have to think about it in the following steps:
+ - Declare the variable =x= and set it to 1
+ - Add 1 to the value of =x=
+ - Set the new value of =x= to be the incremented value
+
+This feels pretty low-level to me. You have to go line-by-line and execute the insructions in your head statement-by-statement. There's relatively little mathematical or logical thinking involved.
+
+Python, Java, and other such languages have rules whether a type is implicitly a value or a reference. This makes them harder for beginners to learn because it's another case to memorize.
+
+This prints 1 because =x= is an integer, a value type:
+
+#+begin_src python :results output
+def increment(x):
+    x = x + 1
+
+n = 1
+increment(n)
+print(n)
+#+end_src
+
+#+RESULTS:
+: 1
+
+However, this example prints 2 because =x= is an object, a reference type:
+
+#+begin_src python :results output
+class Num:
+    def __init__(self):
+        self.val = 1
+
+
+def increment(x):
+    x.val = x.val + 1
+
+
+n = Num()
+increment(n)
+print(n.val)
+#+end_src
+
+#+RESULTS:
+: 2
+
+In C, you have to be explicit whether a type is a value or a reference:
+
+#+begin_src C :includes <stdio.h>
+  void increment(int x) {
+      x = x + 1;
+  }
+
+  int main() {
+      int n = 1;
+      increment(n);
+      printf("%d\n", n);
+  }
+#+end_src
+
+#+RESULTS:
+: 1
+
+C prints 1 because functions have value semantics unless they explicitly use pointers. This is the C version of the Python code using objects:
+
+#+begin_src C :includes <stdio.h>
+  void increment(int *x) {
+      *x = *x + 1;
+  }
+
+  int main() {
+      int n = 1;
+      increment(&n);
+      printf("%d\n", n);
+  }
+#+end_src
+
+#+RESULTS:
+: 2
+
+Here it prints 2 because =x= is explicitly passed by-reference to the =increment= function. Languages like Python and Java have reference semantics where all non-"primitive" types are implicitly references, just like C pointers.
+
+Learning about this made sense at a surface level during my intro CS course, but it never really clicked until 2 semesters later when I finally learned about pointers in C++. We never learned about pass-by-reference from First Principles.
+
+I think that using languages with implicit reference semantics to teach an introductory CS class is a bad idea if you're trying to adhere to the First Principles approach, but unfortunately, this rules out pretty much every popular programming language except C and C++. However, even C and C++ are not ideal because they force you to think like the machine, and we're trying to stick to high-level math and logic. This means that the only available languages to teach intro CS are functional or logic languages.
+
+**** The Case for Using an Obscure Functional/Logic Language for Intro CS
+
+Let's address some rebuttals:
+ - Students want to learn skills that they can actually use. Python is a useful language and no one cares about obscure languages like Lisp, ML, or Prolog.
+   - This is an intro CS course for potential CS majors. No one knows what is or isn't "useful" yet. There's still plenty of time later on to learn Python and Java, but a language with intuitive syntax and semantics (for beginners with no prior exposure to imperative languages) is a great fit for an intro course.
+ - Students with previous experience in languages like Python and JavaScript will be at a disadvantage.
+   - Yes, this is potentially a good thing because an unfamiliar language will even the playing field and ensure that everyone learns the same material. At the end of the day, this course is about teaching CS fundamentals, not teaching general-purpose programming, and a language like Racket or Prolog excels at this.
+ - Students will be turned off by the unfamiliar syntax (especially for Lisps like Racket).
+   - Unfamiliar syntax can be a good thing. If taught well, Lisp syntax is extremely simple and can be learned in far less time than supposedly simple languages like Python. It also introduces the concept of data structures early on---your program is itself a list. This will also expose students to a way of thinking about syntax which will help in later courses when they learn languages like C and Python---syntax isn't that important and its main use is to enable different semantics. There are zero corner-cases in Lisp syntax and only a few in Prolog or ML (the programming language family, not Machine Learning), where in Python, you have to memorize dozens of corner-cases.
+
+Here's an example of a corner-case in Python's syntax that doesn't make sense until you understand the difference between expressions and statements. This difference doesn't exist in a Lisp or ML dialect because everything is an expression.
+
+This doesn't work because =if= is a statement:
+
+#+begin_src python
+x = if True:
+      1
+    else:
+      2
+#+end_src
+
+#+RESULTS:
+
+An =if= expression looks completely different:
+
+#+begin_src python
+x = 1 if True else 2
+#+end_src
+
+In Racket, it looks like this---everything in the language is an expression wrapped in either square brackets or parentheses:
+
+#+begin_src scheme
+(let [[x (if true 1 2)]]
+   ;; use x...
+)
+#+end_src
+
+Here's another case for teaching a functional language early on: historically imperative languages are slowly getting features that have been in functional languages for decades. This is similar to the time when procedural languages like PHP and Perl got OO features 15-25 years ago after the rise of Java.
+  - C++: Lambdas, optional types, concepts (similar to Haskell type classes)
+  - Java: Lambdas, streams, optional types (like Haskell's =Maybe= or OCaml's =Option.t=), data records
+  - PHP: closures ([[https://nullprogram.com/blog/2019/09/25/][sort of...]])
+  - Python: Pattern matching, data classes, optional types
+
+Rust, one of the most popular new imperative languages, has immutable variables by default, [[https://en.wikipedia.org/wiki/Value_semantics][value semantics]], higher-order functions, and proper lexical closures. Go and Swift come close but choose to make immutability opt-in and don't have consistent value semantics.
+
+Closures and higher-order functions are everywhere in JavaScript code, and JS is consistently the most or second-most popular programming language in the world.
+
+Universities should teach new ideas, not stick to decades-old "best practices". To get with the times, CS curriculums need to place a greater emphasis on functional and logic programming. If nothing else, students should at least learn about immutability and higher-order functions.
+
+**** A Proposed Syllabus for CS 101
+
+I'll admit that I have zero experience designing syllabi but I'll give this my best shot. Note that this is not language-specific and the topics (in order) will mostly look like this:
+
+- Early CS History: Ada, Turing, Church, etc. This is optional but might help put things into perspective
+- Strings, and numbers (all immutable, Unicode should be introduced early)
+- Expressions
+- Variables (immutable)
+- The concept of abstraction (this is crucial to understand because all of CS is just layers of abstraction)
+- Abstracting expressions with functions
+- Conditional expressions and booleans
+- Recursion
+- Debugging techniques such as tracing function execution, printing expressions, and stepping through code
+- Abstracting functions with higher-order functions
+- Lists
+- Syntax sugar
+- Hashmaps and trees (use lists to build these)
+- Basic algorithms like searching and sorting
+- Applying these techniques to make a game or some other type of interactive GUI
+
+This follows First Principles because students already have an intuitive sense for numbers, expressions, variables, and functions from math. A string is just text. Conditional expressions and booleans are also rooted in math and fundamental logic. I chose to introduce lists after higher-order functions because lists can be implemented in terms of functions---this goes back to Lambda Calculus. Syntax sugar is a fancy way of explaining substitution---lists represented as nested functions can be "de-sugared" into regular lists like =[1, 2, 3]=.
+
+Teaching recursion early will give students a massive advantage when they start learning about more complex algorithms like BFS and DFS later on. Once recursion is intuitive, control structures like for- and while-loops will be trivial to understand, and can be implemented using recursion.
+
+I also think that CS courses should place a much greater emphasis on debugging since it's an extremely useful skill to quickly find bugs. Professional programmers spend a lot of time debugging and some coding interviews even have a dedicated debugging section. Profiling is another crucial skill that probably doesn't fit in an intro course, but should be a major component of any lecture involving optimization. Profilers are valuable tools, yet I was never taught how to use one in school.
+
+**** The Case for Racket (a Lisp dialect)
+
+Quick disclaimer: I've never really used Racket myself but have read some second-hand accounts of it and some of the documentation. I do have experience with Lisp (Clojure, Emacs Lisp, and a bit of Common Lisp), Prolog, and ML (Standard ML and OCaml).
+
+Racket is fork of Scheme which is a dialect of Lisp. In my opinion, Scheme is the second simplest programming language (the simplest is Forth, but the two are pretty close). Simple languages are ideal for teaching and avoid a lot of confusion down the line when covering more advanced topics.
+
+One of the major criticisms against teaching Lisp is its weird syntax. I'll admit that Lisp syntax is not ideal for real-world programming for a number of reasons that I won't get into in this post. However, it's great for beginners. Once you get used to the syntax (which only takes around 30 minutes), Lisp allows you to focus on your actual program instead of worrying about trivial things like where to place a comma or semicolon. It also gives you an intuitive sense for lists and trees, since a Lisp program is basically just the program's Abstract Syntax Tree.
+
+MIT used to teach its introductory CS class in Scheme but [[https://www.wisdomandwonder.com/link/2110/why-mit-switched-from-scheme-to-python][switched to Python]] over 10 years ago. Their reasoning is perfectly valid, but a modern Scheme descendant like Racket has plenty of libraries for [[https://docs.racket-lang.org/framework/index.html][GUI]] and [[https://docs.racket-lang.org/quick/][interactive programming]] that will engage students. I also argued above that Python is a poor choice for the intro course of a CS curriculum based on First Principles, even though it has a fantastic library ecosystem. Yes, programming today is mostly gluing existing pieces of software together and keeping legacy code from falling apart, but that's no excuse for not teaching students how all software fundamentally works.
+
+Racket has a great IDE called DrRacket with support for interactive programming. Having a REPL, a shell that allows you to interactively execute small snippets of code without having to recompile your whole program, is a crucial feature for any begginer-friendly programming language. DrRacket is easy to install on all platforms and is easy to use.
+
+As opposed to many other obscure programming languages, Racket has excellent documentation that is geared towards beginners. The error messages are also pretty good. Python has one of the better official documentation stories from what I've seeen, but Racket's official docs are top of the line. Typed Racket (a static typing system for Racket implemented in the language itself) might be more useful than the core dynamic Racket because it will force students to think about types early (which they have to do in dynamically-typed languages anyways).
+
+No one really uses Racket in industry and that's perfectly okay. I don't think that any course after CS 101 should use Racket, but it's great for teaching the fundamentals. [[https://github.com/racket/racket/wiki/Courses-using-Racket][Multiple universities]] use the language so there is plenty of teaching material.
+
+Here are some other potential languages and reasons why they're not as good of a fit:
+- Prolog (unpopular option for intro CS but should definitely be taught in a later course, logic programming is too far-removed from imperative... it's easier to switch between functional and imperative languages, not a lot of good documentation)
+- OCaml (currying by default is confusing and makes it harder to teach, GUI ecosystem is lacking, documentation isn't very good but is improving)
+- Clojure (the language is fantastic since everything is immutable but you need to know Java in order to read the error messages... this might be improved in the future)
+- Haskell (lazy evaluation is nice coming from math but it's too far-removed from eagerly-evaluated imperative languages, error messages can be difficult to understand)
+- Standard ML, Scheme (not a lot of documentation or libraries)
 * DONE Typed APIs in Python with dataclasses and NamedTuples :programming:python:
 CLOSED: [2020-08-13 Thu 13:35]
 :PROPERTIES:
