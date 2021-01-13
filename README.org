@@ -1,0 +1,17 @@
+* Installation
+
+1. Clone the repo
+2. Initialize the submodules via =git submodule init=
+3. Update the submodules via =git submodule update --recursive --remote=
+
+* Making a new post
+
+1. Add a new section to the org-mode file at =content-org/posts.org=
+2. Add a TODO, tag, and properties to the section
+3. Once finished writing, mark the section as DONE
+4. Export the section in Emacs using [[https://ox-hugo.scripter.co/][ox-hugo]] which will create a new Markdown file in the =content/posts= directory
+
+* Deploying
+
+- Run =hugo server -D= to get a development web server to see the changes
+- Run =deploy.sh= once ready to publish
