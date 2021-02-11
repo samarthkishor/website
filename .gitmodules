@@ -4,4 +4,3 @@
 [submodule "public"]
 	path = public
 	url = https://github.com/samarthkishor/samarthkishor.github.io.git
-	branch = master
