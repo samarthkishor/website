@@ -6,6 +6,43 @@
 #+DATE: 2020-06-29
 #+STARTUP: logdone
 
+* TODO Categorizing Programming Languages                                :PL:
+:PROPERTIES:
+:EXPORT_FILE_NAME: categorizing-programming-languages
+:END:
+
+There are many different ways to categorize programming languages: dynamic vs static, strict vs lazy, OO vs functional, etc. There's already plenty of information about this on the Internet.
+
+I think there's a different way to categorize programming languages based more on the language's underlying philosophy rather than the technical details of its specification or implementation. In this case, there are two types of languages: "hacker" languages and "secure" languages. These are completely made-up terms but I think they provide a useful frame of reference.
+
+** "Hacker" Languages
+
+"Hacker" languages are for programmers who like to get things done. Instead of forcing the programmer to adapt to the limitations of the language, the programmer can adapt the language around the program. The underlying philosophy of "hacker" languages is [[https://www.jwz.org/doc/worse-is-better.html][Worse is Better]]. For example, "hacker" langauges usually have weak and/or dynamic typing which lets the programmer write a program without having to worry about satisfying the type-checker. There are many programs that are completely valid and bug-free, but cannot compile in some statically-typed languages due to the limited expressiveness of the type-checker. Hackers are willing to trade the computer-assisted verification of some parts of their program for the ability to write their program in any way they want. Just because a program is dynamic does not mean it is full of bugs---programmers who prefer "hacker" languages will usually catch bugs through extensive testing rather than from compiler errors. Either that, or they just prefer to hack things together for throwaway programs/scripts and don't really care about minor bugs if they happen to crop up. The latter is more of a [[https://xkcd.com/1428/]["move fast and break things"]] approach.
+
+Programmers do not have to use dynamic features in these langauges, but a program written in a "hacker" language will not look out-of-place if it is overly dynamic---it's all about giving programmers the freedom to write programs however they want. I don't think it's possible for a strongly- and statically-typed language to be considered a "hacker" language.
+
+Let's look at some examples of popular "hacker" languages:
+
+*** C
+
+C is statically-typed, yet it's a great example of a flexible procedural programming language. Features such as type casts and =void= pointers allow programmers to subvert the type system in order to gain flexibility at run-time. For example, the [[https://linux.die.net/man/3/qsort][qsort]] function in the C standard library takes a comparison function with two =void*= arguments, allowing the function to work with any type (as long as the types are casted appropriately). This comes with the downside that the compiler in many cases cannot verify that the program passes the correct types to =qsort=, and the program may crash at run-time because of this. C also has primitive but powerful preprocessor macros that allow programmers to reduce boilerplate. It is possible to write bug-free and memory-safe programs written in C---most of the modern computing infrastructure is written in this language---but it is difficult and often requires discipline and good tools. Sometimes programmers really need the flexibility of a language like C---for example, it is extremely difficult to write a [[https://way-cooler.org/blog/2019/04/29/rewriting-way-cooler-in-c.html][compositor]] in safe Rust.
+
+*** JavaScript
+
+Just as /C/ is the /lingua franca/ of UNIX systems, JavaScript is the /lingua franca/ of the Web. I believe that this is for a good reason---both languages are extremely flexible. Brendan Eich (in)famously hacked together a working prototype of JavaScript (initially called Mocha) in just ten days. JS, like C, is weakly-typed, but it is also dynamically-typed and object-oriented. This makes it more difficult for the language to verify that certain parts of a program are correct, like passing a number to a method that only takes strings; however, it means that the programmer can leverage the dynamic object system to create [[https://svelte.dev/][sophisticated programs]] with little code. JavaScript was implemented as a small scripting language for websites and most likely was not designed to scale beyond a few thousand lines. With its poor support for detecting errors early and tendency to allow minor mistakes to [[https://javascriptwtf.com/][escape undetected]], it is possible for websites with JS scripts to run (albeit not correctly) without crashing, which sometimes can be a nice feature to have.
+
+*** Clojure
+
+Clojure is a strongly- and dynamically-typed functional programming language. Saying that it's popular might be a bit of a stretch, but oh well... Although programmers often consider functional languages to be more theory-oriented and less suitable for getting things done (although thankfully this sentiment seems to be changing), Clojure is heavily inspired by Lisp which means it's naturally a [[http://paulgraham.com/avg.html][great fit for hackers]]. Clojurians embrace [[https://clojure.org/about/dynamic][dynamic language features]] like metaprogramming, REPLs, and multiple-dispatch while rejecting the limitations imposed by static type systems, preferring to catch bugs by using [[https://clojure.org/about/functional_programming#_immutable_data_structures][immutable data structures]], [[https://lispcast.com/nil-punning/][nil-punning]], and [[https://clojure.org/about/spec][generative testing]] instead. Its dynamicism makes Clojure a fantastic choice for quick prototyping, and the idiomatic use of immutability and [[https://clojure.org/about/runtime_polymorphism][polymorphism]] throughout the language makes it easier to extend the code in the future. However, this dynamicism comes at a cost---a Clojure program can run slower than the equivalent Java program due to Clojure's lack of type information at run-time, and sometimes Clojure code needs [[https://clojure.org/reference/java_interop#typehints][type hints]] to achieve comparable performance. While Clojure encourages immutability, it does not forbid using mutable state, giving programmers the option to use whichever approach makes sense. In this sense, Clojure is pragmatic and does not claim to be a "pure" functional language like Haskell.
+
+** "Secure" Languages
+
+*** Rust
+
+*** TypeScript
+
+*** Scala
+
 * TODO Teaching University CS from First Principles                      :PL:
 :PROPERTIES:
 :EXPORT_FILE_NAME: university-cs-from-first-principles
