@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Remote Linux Process Hacking through SSH | Samarth&#39;s Blog</title>
+
+
+
+<link href="https://samarthkishor.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Samarth&#39;s Blog" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://samarthkishor.github.io/css/styles.css'><link rel='stylesheet' href='https://samarthkishor.github.io/css/vertical-timeline.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="https://samarthkishor.github.io/posts/remote_process_hacking/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="https://samarthkishor.github.io">
+          <h1 id="nav-heading" class="title is-4">Samarth&#39;s Blog</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="github" href='https://github.com/samarthkishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/samarth-kishor'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:samarthkishor1@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+      <div class="nav-left"><a class="nav-item" href="/about">
+          <h2 class="title is-5">About</h2>
+        </a><a class="nav-item" href="/posts">
+          <h2 class="title is-5">Archive</h2>
+        </a></div>
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/programming/">#programming</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/lisp/">#lisp</a>
+  
+  | <a class="subtitle is-6" href="/tags/linux/">#linux</a>
+  
+
+
+      
+    </div>
+    <h2 class="subtitle is-6">March 9, 2020</h2>
+    <h1 class="title">Remote Linux Process Hacking through SSH</h1>
+    
+    <div class="content">
+      <p>There&rsquo;s this really cool <a href="https://www.youtube.com/playlist?list=PLBgJcoaU2hl-JnoVOzjYB5qk%5FPfYjPm-I">process hacking series</a> on YouTube by Keist Zenon. He
+uses the programming language Common Lisp to interact with processes on his
+Linux machine. I tried following the tutorial on my Mac, but macOS does not have
+the same <code>ptrace</code> commands and system call interfaces as Linux so this did not
+work out. However, I have VirtualBox set up on my Mac with a Debian VM which I
+use whenever I need Linux.</p>
+<p>Here&rsquo;s the idea: is it possible to hack processes on my Linux VM from Emacs on
+my Mac? I found out that it&rsquo;s not only possible, but it&rsquo;s actually surprisingly
+easy.</p>
+<h2 id="configuring-the-virtual-machine">Configuring the Virtual Machine</h2>
+<p>First you&rsquo;ll need to set up a Bridged Adapter on your VirtualBox VM to allow
+your host machine to connect to it via SSH. <a href="https://www.youtube.com/watch?v=ErzhbUusgdI">This YouTube tutorial</a> was pretty
+helpful. You&rsquo;ll just have to change how you enable the SSH service on your Linux
+VM&mdash;I&rsquo;m on Debian so I had to run the command</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">systemctl status ssh | cat | grep active
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Active: active (running) since Fri 2020-03-13 18:24:14 EDT; 33s ago
+</code></pre></div><p>to see if SSH was enabled.</p>
+<p>To attach and manipulate this process, we need to use the <code>ptrace</code> function. You
+can see the documentation for it with the command <code>man 2 ptrace</code> (2 stands for
+the second section of the manual, since we want the C system call function for
+<code>ptrace</code> instead of the general UNIX command). We could use C for process
+hacking, but it&rsquo;s a lot nicer to use an interactive language like Lisp. Plus,
+it&rsquo;s possible to interact with a remote Lisp REPL from your host machine&rsquo;s local
+Emacs instance through SSH. Common Lisp is pretty amazing&mdash;I don&rsquo;t know if many
+other programming languages have these features.</p>
+<p>Clone <a href="https://github.com/k-stz/cl-ptrace">Keist&rsquo;s GitHub repo</a> to your VM to get his Common Lisp library for process
+hacking with <code>ptrace</code>. The code here is essentially the same as the tutorial,
+except you might have to remove the line that says</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-common-lisp" data-lang="common-lisp">(<span style="color:#e6db74">:file</span> <span style="color:#e6db74">&#34;cl-ptrace/async-functions&#34;</span>)
+</code></pre></div><p>since that file doesn&rsquo;t exist in the repo for some reason. Install your Common
+Lisp implementation of choice (I use <code>sbcl</code> since it&rsquo;s well-supported on most
+platforms) and follow the instructions on the <a href="https://www.quicklisp.org/beta/">Quicklisp website</a> to install
+Quicklisp. Quicklisp is the unofficial package manager for Common Lisp.</p>
+<p>Once you&rsquo;ve successfully installed Quicklisp, you need to set up a Lisp REPL on
+the remote VM so it can talk to your local Emacs editor. Quit out of your <code>sbcl</code>
+repl and run it as root. We need Lisp to run as root since the <code>ptrace</code> system
+calls need root access.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo sbcl
+</code></pre></div><p>In his tutorial, Kaiste avoided this problem by running Emacs as root since he
+was hacking processes from the same machine. However, we don&rsquo;t want to do this
+since running Emacs as root can be dangerous, plus we are trying to hack
+processes on our <em>remote</em> machine from our <em>local (host)</em> Emacs editor, so
+running Emacs locally as root wouldn&rsquo;t really be useful.</p>
+<p>Use Quicklisp to load/install <code>ASDF</code> and <code>slynk</code>, and then create a <code>slynk</code>
+server on port 4006. You can use the default port 4005 if it&rsquo;s open.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-common-lisp" data-lang="common-lisp">(ql:quickload <span style="color:#e6db74">:asdf</span>)
+(ql:quickload <span style="color:#e6db74">:slynk</span>)
+(slynk:create-server <span style="color:#e6db74">:port</span> <span style="color:#ae81ff">4006</span>)
+</code></pre></div><p>If you get stuck, follow the instructions in <a href="https://joaotavora.github.io/sly/#Setting-up-the-Lisp-image">the SLY manual</a>, but I think
+Quicklisp makes this process a bit easier.</p>
+<p>Now fire up a new terminal and get your VM&rsquo;s ip address. On Debian, the command
+is</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hostname -I
+</code></pre></div><p>After that, SSH into your VM from your <em>host</em> machine to create an SSH tunnel
+that we&rsquo;ll take advantage of later.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">ssh -L4006:localhost:4006 &lt;username&gt;@&lt;ip-address&gt;
+</code></pre></div><p>Change <code>4006</code> to the port that <code>slynk</code> is using to run your Lisp server, and
+change the <code>&lt;username&gt;</code> and <code>&lt;ip-address&gt;</code> fields. Remember to run this command
+from your host machine, not the VM.</p>
+<p>Once your SSH tunnel is set up, follow the instructions in section 8.1.3 of the
+SLY manual (linked above) to configure Emacs to translate filenames between the
+remote and host machines. Make sure you have TRAMP installed and working in
+Emacs. Now you can connect to your VM from your host machine&rsquo;s Emacs using
+TRAMP. <code>C-x C-f /ssh:&lt;username&gt;@&lt;ip-address&gt;</code> should do the trick. Now you can
+navigate to the <code>cl-ptrace</code> repo.</p>
+<p>The setup is pretty much over: now we can start hacking. Compile the <code>spam.c</code>
+file in the <code>cl-ptrace</code> repo on your VM into the executable <code>spam</code> and run it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">gcc spam.c -o spam
+./spam
+</code></pre></div><p>We want to get the process id (<code>pid</code>) of this <code>spam</code> program so we can interact
+with it. To do this, run the command</p>
+<p><a id="code-snippet--spam-pid"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">ps -a | grep spam | awk <span style="color:#e6db74">&#39;{ print $1 }&#39;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">1543
+</code></pre></div><p>We can then display information about the process with <code>top</code>. You can get a
+nicer output by using the <code>htop</code> program.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">top -p $PID
+</code></pre></div><p>We can even limit the output of <code>top</code> to just get the CPU usage. The <code>sed</code>
+commands are just for making the output nicer.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">top -p $PID -n <span style="color:#ae81ff">2</span> -b | grep Cpu | sed <span style="color:#e6db74">&#39;s/\:/\: /&#39;</span> | sed <span style="color:#e6db74">&#39;s/us,.*/ /&#39;</span>
+</code></pre></div><table>
+<thead>
+<tr>
+<th>%Cpu(s):</th>
+<th>53.6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%Cpu(s):</td>
+<td>100.0</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the <code>spam</code> program is taking up over 90% of the CPU since it&rsquo;s an
+infinite <code>while</code> loop in a single-threaded process.</p>
+<h2 id="hacking-in-emacs">Hacking in Emacs</h2>
+<p>Next, switch back to Emacs (on the host machine) and make sure you&rsquo;re in the
+remote <code>cl-ptrace</code> repo via TRAMP. We want to connect to the remote Lisp server
+from Emacs, so run the command <code>M-x sly-connect</code>, keep the default host as
+<code>localhost</code>, and change the port to the <code>slynk</code> server port.</p>
+<p>Now you have a local Lisp REPL that is connected to your VM via the SSH tunnel
+we created earlier. Load the file <code>cl-ptrace.asd</code> with the command <code>M-x sly-load-file</code>. The file is on the remote VM, but this isn&rsquo;t a problem because
+TRAMP should be configured to handle the remote filenames (we did this earlier).
+This should load the file into the <code>sly</code> REPL. Then run <code>(asdf:load-system &quot;cl-ptrace&quot;)</code> to load the <code>cl-ptrace</code> library into the REPL, and run
+<code>(in-package :cl-ptrace)</code> to start using the library.</p>
+<p>Make sure that you&rsquo;re root by running the function <code>(am-i-root?)</code>. It should
+return <code>T</code>. Now you&rsquo;ve successfully created a mechanism to hack remote processes
+from your local machine using Common Lisp and Emacs. Go ahead and follow along
+with the rest of Kaiste&rsquo;s videos&mdash;they&rsquo;re amazing.</p>
+
+      
+    </div>
+    
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; Samarth Kishor 2020</p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+
+<script data-goatcounter="https://samarth-personal-site.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>open-source on Samarth&#39;s Blog</title>
+    <link>https://samarthkishor.github.io/tags/open-source/</link>
+    <description>Recent content in open-source on Samarth&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Samarth Kishor 2020</copyright>
+    <lastBuildDate>Fri, 26 Feb 2021 23:00:00 +0000</lastBuildDate><atom:link href="https://samarthkishor.github.io/tags/open-source/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Role of Open Source in Addressing Inequality</title>
+      <link>https://samarthkishor.github.io/posts/open_source_inequality/</link>
+      <pubDate>Fri, 26 Feb 2021 23:00:00 +0000</pubDate>
+      
+      <guid>https://samarthkishor.github.io/posts/open_source_inequality/</guid>
+      <description>This is my second blog post for the UVA class LPPS 4720.
+Inequality manifests itself in many different ways, but I will only address one of these in this post: access to information. The 21st century, the so-called &amp;ldquo;Information Age&amp;rdquo;, is a time where connection to the Internet along with basic literacy enables an unprecedented number of people to freely participate in the &amp;ldquo;Human Colossus&amp;rdquo;. However, even with the Internet, the abuse of strict intellectual property laws can restrict free access to information and perpetuate inequality.</description>
+    </item>
+    
+    <item>
+      <title>The Role of Open Source in Innovation and Product Development</title>
+      <link>https://samarthkishor.github.io/posts/open_source_innovation_product_development/</link>
+      <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://samarthkishor.github.io/posts/open_source_innovation_product_development/</guid>
+      <description>This is my first blog post for the UVA class LPPS 4720.
+While Intellectual Property (IP) has been a useful tool in the past to foster entrepreneurship, it has many underlying issues. An Open Source philosophy is a great alternative to IP which solves many of its issues, but still is not a silver bullet. To understand the advantages of Open Source when applied to innovation and product development, it is important to first understand IP.</description>
+    </item>
+    
+  </channel>
+</rss>
