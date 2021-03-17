@@ -1,9 +1,9 @@
 +++
 title = "The Role of Open Source in Energy"
-author = ["Samarth Kishor"]
-lastmod = 2021-03-11T22:18:14-05:00
+date = 2021-03-12T16:25:00-05:00
+lastmod = 2021-03-17T00:09:44-04:00
 tags = ["open-source"]
-draft = true
+draft = false
 +++
 
 This is my third blog post for the UVA class LPPS 4720.

@@ -1,8 +1,9 @@
 +++
 title = "The Role of Open Source in Education"
-lastmod = 2021-03-16T23:48:54-04:00
+date = 2021-03-16T23:50:00-04:00
+lastmod = 2021-03-17T00:09:21-04:00
 tags = ["open-source"]
-draft = true
+draft = false
 +++
 
 This is my fourth blog post for the UVA class LPPS 4720.
