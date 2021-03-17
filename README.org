@@ -1,8 +1,9 @@
 * Installation
 
 1. Clone the repo
-2. Initialize the submodules via =git submodule init=
-3. Update the submodules via =git submodule update --recursive --remote=
+2. Initialize the theme submodule via =git submodule init=
+3. Update the theme submodule via =git submodule update --recursive --remote=
+4. Clone the [[https://github.com/samarthkishor/samarthkishor.github.io][GitHub Pages website repo]] (in a separate directory)
 
 * Making a new post
 
@@ -13,5 +14,7 @@
 
 * Deploying
 
-- Run =hugo server -D= to get a development web server to see the changes
-- Run =deploy.sh= once ready to publish
+1. Run =hugo server -D= to get a development web server to see the changes
+2. Once happy with the changes, run the =hugo= command to generate the =public= directory
+3. Manually copy-paste contents of the =public= directory into the website repo (samarthkishor.github.io)
+4. Run =git push= to update both the this repo and the actual website
