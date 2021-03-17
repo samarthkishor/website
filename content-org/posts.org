@@ -41,7 +41,23 @@ Clojure is a strongly- and dynamically-typed functional programming language. Sa
 *** TypeScript
 
 *** Scala
-* TODO The Role of Open Source in Energy                        :open_source:
+
+* DONE The Role of Open Source in Education                     :open_source:
+CLOSED: [2021-03-16 Tue 23:50]
+:PROPERTIES:
+:EXPORT_FILE_NAME: open_source_education
+:END:
+
+This is my fourth blog post for the UVA class LPPS 4720.
+
+Education is a cornerstone of modern society and is vital to the success of future generations. This means that everyone should have access to a quality education regardless of their background or socio-economic status. Open Source has the potential to revolutionize and democratize education by reducing the costs of necessary materials such as textbooks (replaced with online [[https://cjvanlissa.github.io/gitbook-demo/index.html][open-access]] books) and software (use [[https://www.libreoffice.org/][LibreOffice]] instead of MS Office, [[https://inkscape.org/][Inkscape]] and [[https://www.gimp.org/][GIMP]] instead of PhotoShop, Linux instead of Windows or macOS, etc.). In this post, I will focus on higher education and how [[https://hackathon.guide/][hackathons]] use the principles of Open Source to enhance [[https://www.ed.gov/stem][STEM]] education in universities.
+
+A hackathon is a short competition, usually around 24 hours, in which teams solve interesting problems using technology in a highly collaborative environment. While the word "hack" has somewhat of a negative connotation these days, it refers to more of a [[http://www.paulgraham.com/hp.html][creative pursuit]] rather than a [[https://www.kaspersky.com/resource-center/threats/black-hat-hacker][nefarious one]]. Most major technical universities host a student-run hackathon---[[https://www.hoohacks.io/][HooHacks]] is the major one at UVA. While technically not required (but [[https://www.gnu.org/philosophy/hackathons.en.html][highly encouraged]]), many people who build something in a hackathon, whether it be a [[https://groupme.com/en-US/about][popular mobile app]] or a [[https://www.iwu.edu/news/2020/students-develop-recycling-robot-at-makeharvard.html][miniature robot]], freely release their projects to the world under an [[https://opensource.org/licenses][Open Source license]]. The main benefit of including a hackathon in the curriculum of any STEM major is that students will learn how to apply their skills towards building a tangible product that solves a real-world problem. While I don't think that a 24 hour hackathon is necessarily a good idea for such a curriculum, having students complete a project involving 10 to 15 total hours of work spanning a couple of days in the context of a larger event where their peers are in the same innovative environment can be an interesting and rewarding experience. The point is to foster a spirit of collaboration among students and let them stand on the shoulders of Open Source giants to build something that would be impossible for a single individual. These events can allow STEM students to build strong communities in which they can help each other succeed instead of competing. The main downside is that the costs of such events are [[https://guide.mlh.io/digital-hackathons/getting-sponsorship/budgeting-your-hackathon][quite high]], especially when they are in-person. However, a university-sponsored hackathon probably should not give out prizes or be sponsored by public companies---instead students could get extra credit for participating and doing well. This would complement existing student-run hackathons at universities which have numerous sponsors and give out thousands of dollars in prizes.
+
+The world's [[https://www.apple.com/][most valuable company]] would likely not exist if not for the [[https://www.computerhistory.org/revolution/personal-computers/17/312][Homebrew Computer Club]] and other Open Source communities. If universities still wish to remain the centers of innovation and entrepreneurship in the 21st Century, including hackathon-like events in their STEM curriculums would be a great way to foster a similar sense of camaraderie and openness among students. While hackathons wouldn't quite revolutionize higher education, they could certainly improve it.
+
+* DONE The Role of Open Source in Energy                        :open_source:
+CLOSED: [2021-03-12 Fri 16:25]
 :PROPERTIES:
 :EXPORT_FILE_NAME: open_source_energy
 :END:
