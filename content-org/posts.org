@@ -42,7 +42,8 @@ Clojure is a strongly- and dynamically-typed functional programming language. Sa
 
 *** Scala
 
-* TODO The Role of Open Source in Infrastructure                :open_source:
+* DONE The Role of Open Source in Infrastructure                :open_source:
+CLOSED: [2021-04-05 Mon 17:36]
 :PROPERTIES:
 :EXPORT_FILE_NAME: open_source_infrastructure
 :END:
