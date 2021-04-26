@@ -48,9 +48,8 @@ Clojure is a strongly- and dynamically-typed functional programming language. Sa
 CLOSED: [2021-04-25 Sun 23:34]
 :PROPERTIES:
 :EXPORT_FILE_NAME: open_source_health
-:END:
 
-This is my seventh blog post for the UVA class LPPS 4720.
+This is my eighth blog post for the UVA class LPPS 4720.
 
 Academic research is critical for the advancement of medical science, yet many of the most prestigious journals are locked behind insurmountable paywalls. Open Access (OA) journals seek to combat this by bringing the principles of open-source to academia---they are completely free and open to the public so that anyone with an Internet connection can access quality medical research. OA also limits many copyright and licensing restrictions, similar to the spirit of Creative Commons licenses, so that the health community can freely build upon each other's work.
 
@@ -59,6 +58,22 @@ The status quo of medical journals is the traditional copyrighted pay-to-read mo
 An important part of academic journals is prestige, which is often measured in terms of how many peers cite an article. Open Access journals have the same [[http://legacy.earlham.edu/~peters/fos/overview.htm#peerreview][peer review]] system as traditional journals and removing barriers to access allows their articles to be cited by a larger number of peers, potentially increasing the prestige and credibility of the journal. Authors and researchers should be motivated by advancing the state-of-the-art in science, not by money, and Open Access encourages this view while traditional publishing is centered around profits.
 
 While traditional journal publishing has seen great success in the past, I think that most medical research should be conducted in an Open Access format in the future. This is especially important because new pandemics like COVID-19 disproportionately impact less wealthy countries which do not have the funds to access some research which is available to more affluent nations. Access to information should be a human right, and it is crucial that everyone in the medical community can learn from each other and stand upon the shoulders of giants to solve the hardest problems in medicine and health.
+
+* DONE The Role of Open Source in Infrastructure                :open_source:
+CLOSED: [2021-04-05 Mon 17:36]
+:PROPERTIES:
+:EXPORT_FILE_NAME: open_source_infrastructure
+:END:
+
+This is my seventh blog post for the UVA class LPPS 4720.
+
+There are two major types of infrastructure that power the Internet: decentralized and centralized. While open-source software can live on both centralized and decentralized infrastructure, I believe that the future of the Web will rely on distributed computing over a decentralized network of computers. Open-source is key to making this work effectively.
+
+As I mentioned in my previous post Tim Berners-Lee envisioned the World Wide Web as a primarily decentralized platform. With the rise of [[https://en.wikipedia.org/wiki/Web_2.0][Web 2.0]], websites became more complex, turning into web applications that require servers in order to function. This marked the beginning of the centralization of the Web, where the companies that owned the servers on which these new web applications ran essentially controlled a large portion of the Web. The rise of [[https://xkcd.com/908/][Cloud Computing]] greatly accelerated this trend, with companies like [[https://aws.amazon.com/][Amazon]] and [[https://cloud.google.com/][Google]] owning a [[https://www.theverge.com/2020/11/25/21719396/amazon-web-services-aws-outage-down-internet][massive]] share of the servers which power many of the latest web applications. It is definitely possible to run open-source software on Cloud infrastructure, but you are still giving away your [[https://www.gnu.org/philosophy/who-does-that-server-really-serve.en.html][freedom]] to control the computers on which your software is running (this is often a good tradeoff considering how difficult servers are to reliably maintain).
+
+An alternative to Web 2.0-style centralization is a fully decentralized platform to host web applications. There are already many decentralized peer-to-peer protocols native to the Internet such as email, [[https://en.wikipedia.org/wiki/Internet_Relay_Chat][instant messaging]], bittorrent, etc., but I'm discussing alternatives to traditional server-based infrastructure. The invention of [[https://www.investopedia.com/terms/b/blockchain.asp][blockchain]] technology enabled a secure, trust-free way to store data and build [[https://ethereum.org/en/dapps/][decentralized applications]] that run on a peer-to-peer network of computers. Blockchain is /not/ a viable alternative to traditional server-based applications in all cases, at least not yet. Decentralized applications (dapps) based on the Ethereum blockchain are [[https://www.investopedia.com/terms/p/proof-work.asp][less efficient]] (although this will hopefully [[https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/][be less of an issue with Ethereum 2]]) and have no centralized authority to contact or blame if something goes wrong. The Ethereum dapp [[https://ethereum.org/en/developers/docs/dapps/#implications-of-dapp-development][website]] has a great list of other drawbacks to using these types of applications. The primary [[https://ethereum.org/en/developers/docs/dapps/#benefits-of-dapp-development][benefit]] of dapps is that they are completely free and open-source---they live on the blockchain so they are automatically trustless and resilient to censorship and control, and users have full confidence that the software they are running is identical to the code they have access to (because everything is open-source).
+
+While it's possible to build applications using open-source technology on both Cloud Computing platoforms and on the Ethereum blockchain, I believe that dapps are a promising alternative to traditional server-based centralized infrastructure. Even though it's certainly not the best fit for every application, I believe that the [[https://www.forbes.com/sites/forbestechcouncil/2020/01/06/what-is-web-3-0/?sh=860d1de58dfb][Web 3.0]] is the future of the Web and will continue to gain viability as the technology improves over time.
 
 * DONE The Role of Open Source in Communication                 :open_source:
 CLOSED: [2021-03-30 Tue 16:25]
