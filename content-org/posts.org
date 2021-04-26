@@ -4,6 +4,7 @@
 #+HUGO_SECTION: posts/
 #+HUGO_AUTO_SET_LASTMOD: t
 #+STARTUP: logdone
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
 
 * TODO Categorizing Programming Languages                                :PL:
 :PROPERTIES:
