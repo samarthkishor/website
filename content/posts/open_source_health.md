@@ -1,12 +1,12 @@
 +++
 title = "The Role of Open Source in Health"
 date = 2021-04-25T23:34:00-04:00
-lastmod = 2021-04-25T23:34:44-04:00
+lastmod = 2021-04-25T23:44:46-04:00
 tags = ["open-source"]
 draft = false
 +++
 
-This is my seventh blog post for the UVA class LPPS 4720.
+This is my eighth blog post for the UVA class LPPS 4720.
 
 Academic research is critical for the advancement of medical science, yet many of the most prestigious journals are locked behind insurmountable paywalls. Open Access (OA) journals seek to combat this by bringing the principles of open-source to academia---they are completely free and open to the public so that anyone with an Internet connection can access quality medical research. OA also limits many copyright and licensing restrictions, similar to the spirit of Creative Commons licenses, so that the health community can freely build upon each other's work.
 

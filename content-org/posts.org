@@ -48,6 +48,7 @@ Clojure is a strongly- and dynamically-typed functional programming language. Sa
 CLOSED: [2021-04-25 Sun 23:34]
 :PROPERTIES:
 :EXPORT_FILE_NAME: open_source_health
+:END:
 
 This is my eighth blog post for the UVA class LPPS 4720.
 
