@@ -44,6 +44,21 @@ Clojure is a strongly- and dynamically-typed functional programming language. Sa
 *** Scala
 
 
+* DONE The Role of Open Source in Climate Change                :open_source:
+CLOSED: [2021-05-14 Fri 00:08]
+:PROPERTIES:
+:EXPORT_FILE_NAME: open_source_climate
+:END:
+
+This is my ninth blog post for the UVA class LPPS 4720.
+
+Software powers everything these days, from traffic signals and [[https://www.consumerreports.org/car-recalls-defects/gm-expands-brake-recall-to-include-more-chevrolet-cadillac-gmc-vehicles/][car brakes]] to the apps we use to search for gas or hail a taxi.  Something we don't often consider is what powers the software and how much power the software consumes.  Some programming languages, the primary tools we use to write software, are highly optimized and energy efficient but are difficult to write programs in while other languages are optimized for ease-of-use but in turn are less efficient.  The former are typically compiled and the latter are interpreted (to keep this short I will avoid going into detail on this distinction).
+
+Programmers want the best of both worlds---to write software in high-level languages optimized for readability and productivity while still producing efficient code comparable to that written in lower-level languages which are in general more difficult and tedious to use.  Oracle's [[https://www.graalvm.org/][GraalVM]] is an attempt to do just that, and is a fascinating example of how cutting-edge research can produce quality open-source /and/ proprietary software.  In a nutshell, GraalVM is a tool that can take a program written in a [[https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html][slow]] high-level language like [[https://www.ruby-lang.org/en/][Ruby]] and produce code that runs in far less time and uses far less energy than code run with a standard Ruby interpreter.
+
+GraalVM is available in two editions: an open-source community edition licensed under a version of the [[https://www.gnu.org/licenses/old-licenses/lgpl-2.0.html][GPL 2]] and a proprietary enterprise edition.  Both are based on the same cutting-edge [[https://dl.acm.org/doi/10.1145/3062341.3062381][research]], but the enterprise edition comes with Oracle support, additional optimizations to make code run faster, and enhanced security.  Oracle claims that using their proprietary technology can lead to [[https://blogs.oracle.com/graalvm/graalvme-saves-energy-oleg-sustainability][massive energy savings]].  These energy savings are only valid for long-running programs, as it takes a lot of resources for GraalVM to optimize code.  In a sense, GraalVM requires a high one-time up-front cost to save energy while running the code, whereas regular code written in these high-level languages require lower up-front costs but use more energy while running.
+
+Oracle historically does not have the best [[https://www.fsf.org/news/oracle-v-google][track record]] of upholding a commitment to open-source, so it will be interesting to see how they maintain the GraalVM project in the future.  Having two separate versions of a tool---one free and open-source and one proprietary for enterprise---is a [[https://www.jetbrains.com/idea][common]] strategy in the software industry where the sales from the enterprise version helps fund development of the open-source version, and the improvements to the open-source version in turn improve the proprietary version, creating a virtuous cycle (in theory).  This approach combines some of the best parts of open-source and proprietary software.
 * DONE The Role of Open Source in Health                        :open_source:
 CLOSED: [2021-04-25 Sun 23:34]
 :PROPERTIES:
