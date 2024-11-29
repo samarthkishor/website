@@ -23,7 +23,7 @@ url = "/index.xml"
 weight = 4
 
 [params]
-footer = "&copy; Samarth Kishor 2024 | [Github](https://github.com/samarthkishor)"
+footer = "&copy; Samarth Kishor 2024 (<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA</a>)"
 
 [params.source]
 org_dir = "content-org"
@@ -32,7 +32,7 @@ md_dir = "content"
 [params.rss] # Adding this tag enables RSS feed
 includeContent = true # Includes whole content in rss
 authorName = "Samarth Kishor" # Author full name
-authorEmail = "samarth@samarth.me" # Author email
+authorEmail = "samarthkishor1@gmail.com" # Author email
 
 [params.assets]
 customCSS = ["css/styles.css"]
