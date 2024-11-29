@@ -19,4 +19,4 @@ Samarth's personal website built using the Hugo static site generator and org-mo
 
 1. Run =hugo server -D= to get a development web server to see the changes
 2. Once happy with the changes, run the =hugo= command to generate the =public= directory
-3. Copy the contents of the =public= directory to the server hosting your server. For example, =rsync -avz public samarth@samarth.me:/var/www/htdocs=.
+3. Copy the contents of the =public= directory to the server hosting your server. For example, =rsync -avz public/ samarth@samarth.me:/var/www/htdocs/=.
