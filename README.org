@@ -1,9 +1,12 @@
+* Description
+Samarth's personal website built using the Hugo static site generator and org-mode.
+
 * Installation
 
 1. Clone the repo
 2. Initialize the theme submodule via =git submodule init=
 3. Update the theme submodule via =git submodule update --recursive --remote=
-4. Clone the [[https://github.com/samarthkishor/samarthkishor.github.io][GitHub Pages website repo]] (in a separate directory)
+4. If you're using the =nix= package manager, run =nix-shell= to get a development shell with =hugo= installed.
 
 * Making a new post
 
@@ -16,5 +19,4 @@
 
 1. Run =hugo server -D= to get a development web server to see the changes
 2. Once happy with the changes, run the =hugo= command to generate the =public= directory
-3. Manually copy-paste contents of the =public= directory into the website repo (samarthkishor.github.io)
-4. Run =git push= to update both the this repo and the actual website
+3. Copy the contents of the =public= directory to the server hosting your server. For example, =rsync -avz public samarth@samarth.me:/var/www/htdocs=.
