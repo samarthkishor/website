@@ -35,7 +35,7 @@ authorName = "Samarth Kishor" # Author full name
 authorEmail = "samarth@samarth.me" # Author email
 
 [params.assets]
-customCSS = ["css/styles.css", "css/vertical-timeline.css"]
+customCSS = ["css/styles.css"]
 
 [taxonomies]
 tag ="tags"
